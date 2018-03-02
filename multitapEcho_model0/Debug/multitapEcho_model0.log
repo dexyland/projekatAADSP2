@@ -1,0 +1,9 @@
+﻿  main.cpp
+c:\materija\ra94-2013\aadsp2\project\multitapecho_model0\main.cpp(80): warning C4305: '=' : truncation from 'double' to 'float'
+c:\materija\ra94-2013\aadsp2\project\multitapecho_model0\main.cpp(115): warning C4244: 'initializing' : conversion from 'double' to 'const float', possible loss of data
+c:\materija\ra94-2013\aadsp2\project\multitapecho_model0\main.cpp(176): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+c:\materija\ra94-2013\aadsp2\project\multitapecho_model0\main.cpp(212): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+c:\materija\ra94-2013\aadsp2\project\multitapecho_model0\main.cpp(214): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+  multitapEcho_model0.vcxproj -> C:\materija\RA94-2013\aadsp2\project\multitapEcho_model0\Debug\multitapEcho_model0.exe
