@@ -2,8 +2,8 @@
 //
 // @file main.cpp
 //
-// Module: multitapEcho
-// Description:  Add multitap echo to input signal
+// Module: tremolo
+// Description:  Add tremolo effect to input signal
 // $Source: /
 // $Revision: 1.0 
 // $Date:    02.03.2018.
@@ -22,14 +22,20 @@
 #define BLOCK_SIZE 16
 #define MAX_NUM_CHANNEL 8
 #define SAMPLE_RATE 48000
-#define BLOCK_SIZE 16
 #define PI 3.14159265358979323846
+#define OUTPUT_CHANNELS_NUM 4
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
 // IO buffers
 /////////////////////////////////////////////////////////////////////////////////
 double sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
+/////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////
+// Input gain
+/////////////////////////////////////////////////////////////////////////////////
+double inputGain = 0.63;
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -67,8 +73,6 @@ typedef struct {
 // @return - nothing
 // Comment: Initialize tremolo structure
 //
-// E-mail:	dejan.martinov94@yahoo.com
-//
 /////////////////////////////////////////////////////////////////////////////////
 void tremolo_init(tremolo_struct_t * tremolo_data)
 {
@@ -93,9 +97,7 @@ void tremolo_init(tremolo_struct_t * tremolo_data)
 //		  - numSamples - Length of buffer
 //
 // @return - nothing
-// Comment: Apply echo to input samples
-//
-// E-mail:	dejan.martinov94@yahoo.com
+// Comment: Apply tremolo to input samples
 //
 /////////////////////////////////////////////////////////////////////////////////
 float lfo(float phase, wave_forms_t waveform);
@@ -132,48 +134,48 @@ float lfo(float phase, wave_forms_t waveform)
 {
 	switch (waveform)
 	{
-	case kWaveformTriangle:
-		if (phase < 0.25f)
-		{
-			return 0.5f + 2.0f*phase;
-		}
-		else if (phase < 0.75f)
-		{
-			return 1.0f - 2.0f*(phase - 0.25f);
-		}
-		else
-		{
-			return 2.0f*(phase - 0.75f);
-		}
-	case kWaveformSquare:
-		if (phase < 0.5f)
-		{
-			return 1.0f;
-		}
-		else
-		{
-			return 0.0f;
-		}
-	case kWaveformSquareSlopedEdges:
-		if (phase < 0.48f)
-		{
-			return 1.0f;
-		}
-		else if (phase < 0.5f)
-		{
-			return 1.0f - 50.0f*(phase - 0.48f);
-		}
-		else if (phase < 0.98f)
-		{
-			return 0.0f;
-		}
-		else
-		{
-			return 50.0f*(phase - 0.98f);
-		}
-	case kWaveformSine:
-	default:
-		return 0.5f + 0.5f*sinf(2.0 * PI * phase);
+		case kWaveformTriangle:
+			if (phase < 0.25f)
+			{
+				return 0.5f + 2.0f*phase;
+			}
+			else if (phase < 0.75f)
+			{
+				return 1.0f - 2.0f*(phase - 0.25f);
+			}
+			else
+			{
+				return 2.0f*(phase - 0.75f);
+			}
+		case kWaveformSquare:
+			if (phase < 0.5f)
+			{
+				return 1.0f;
+			}
+			else
+			{
+				return 0.0f;
+			}
+		case kWaveformSquareSlopedEdges:
+			if (phase < 0.48f)
+			{
+				return 1.0f;
+			}
+			else if (phase < 0.5f)
+			{
+				return 1.0f - 50.0f*(phase - 0.48f);
+			}
+			else if (phase < 0.98f)
+			{
+				return 0.0f;
+			}
+			else
+			{
+				return 50.0f*(phase - 0.98f);
+			}
+		case kWaveformSine:
+		default:
+			return 0.5f + 0.5f*sinf(2.0 * PI * phase);
 	}
 }
 
@@ -185,77 +187,76 @@ float lfo(float phase, wave_forms_t waveform)
 // Function:
 // main
 //
-// @param - argv[0] - Input file name
-//        - argv[1] - Output file name
+// @param - argv[1] - Input file name
+//        - argv[2] - Output file name
 // @return - nothing
 // Comment: main routine of a program
-//
-// E-mail:	dejan.martinov94@yahoo.com
 //
 /////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])
 {
-	FILE *wav_in=NULL;
-	FILE *wav_out=NULL;
+	FILE *wav_in = NULL;
+	FILE *wav_out = NULL;
 	char WavInputName[256];
 	char WavOutputName[256];
 	WAV_HEADER inputWAVhdr, outputWAVhdr;
-	tremolo_struct_t* tremolo_data;
+	tremolo_struct_t tremolo_data;
 
 
 	// Init channel buffers
-	for(int i=0; i<MAX_NUM_CHANNEL; i++)
-		memset(&sampleBuffer[i],0,BLOCK_SIZE);
+	for (int i = 0; i<MAX_NUM_CHANNEL; i++)
+		memset(&sampleBuffer[i], 0, BLOCK_SIZE);
 
 	// Open input and output wav files
 	//-------------------------------------------------
-	strcpy(WavInputName,argv[1]);
-	wav_in = OpenWavFileForRead (WavInputName,"rb");
-	strcpy(WavOutputName,argv[2]);
-	wav_out = OpenWavFileForRead (WavOutputName,"wb");
+	strcpy(WavInputName, argv[1]);
+	wav_in = OpenWavFileForRead(WavInputName, "rb");
+	strcpy(WavOutputName, argv[2]);
+	wav_out = OpenWavFileForRead(WavOutputName, "wb");
 	//-------------------------------------------------
 
 	// Read input wav header
 	//-------------------------------------------------
-	ReadWavHeader(wav_in,inputWAVhdr);
+	ReadWavHeader(wav_in, inputWAVhdr);
 	//-------------------------------------------------
-	
+
 	// Set up output WAV header
 	//-------------------------------------------------	
 	outputWAVhdr = inputWAVhdr;
-	outputWAVhdr.fmt.NumChannels = 4; // change number of channels
+	outputWAVhdr.fmt.NumChannels = OUTPUT_CHANNELS_NUM; // change number of channels
 
-	int oneChannelSubChunk2Size = inputWAVhdr.data.SubChunk2Size/inputWAVhdr.fmt.NumChannels;
-	int oneChannelByteRate = inputWAVhdr.fmt.ByteRate/inputWAVhdr.fmt.NumChannels;
-	int oneChannelBlockAlign = inputWAVhdr.fmt.BlockAlign/inputWAVhdr.fmt.NumChannels;
-	
+	int oneChannelSubChunk2Size = inputWAVhdr.data.SubChunk2Size / inputWAVhdr.fmt.NumChannels;
+	int oneChannelByteRate = inputWAVhdr.fmt.ByteRate / inputWAVhdr.fmt.NumChannels;
+	int oneChannelBlockAlign = inputWAVhdr.fmt.BlockAlign / inputWAVhdr.fmt.NumChannels;
+
 	outputWAVhdr.data.SubChunk2Size = oneChannelSubChunk2Size*outputWAVhdr.fmt.NumChannels;
 	outputWAVhdr.fmt.ByteRate = oneChannelByteRate*outputWAVhdr.fmt.NumChannels;
 	outputWAVhdr.fmt.BlockAlign = oneChannelBlockAlign*outputWAVhdr.fmt.NumChannels;
 
 	// Write output WAV header to file
 	//-------------------------------------------------
-	WriteWavHeader(wav_out,outputWAVhdr);
+	WriteWavHeader(wav_out, outputWAVhdr);
 
 	// Init tremolo module
-	tremolo_init(tremolo_data);
+	tremolo_init(&tremolo_data);
 
+	printf("Starting processing loop ...\n");
 	// Processing loop
 	//-------------------------------------------------	
 	{
 		int sample;
-		int BytesPerSample = inputWAVhdr.fmt.BitsPerSample/8;
+		int BytesPerSample = inputWAVhdr.fmt.BitsPerSample / 8;
 		const double SAMPLE_SCALE = -(double)(1 << 31);		//2^31
-		int iNumSamples = inputWAVhdr.data.SubChunk2Size/(inputWAVhdr.fmt.NumChannels*inputWAVhdr.fmt.BitsPerSample/8);
-		
+		int iNumSamples = inputWAVhdr.data.SubChunk2Size / (inputWAVhdr.fmt.NumChannels*inputWAVhdr.fmt.BitsPerSample / 8);
+
 		// exact file length should be handled correctly...
-		for(int i=0; i<iNumSamples/BLOCK_SIZE; i++)
-		{	
-			for(int j=0; j<BLOCK_SIZE; j++)
+		for (int i = 0; i<iNumSamples / BLOCK_SIZE; i++)
+		{
+			for (int j = 0; j<BLOCK_SIZE; j++)
 			{
-				
-				for(int k=0; k<inputWAVhdr.fmt.NumChannels; k++)
-				{	
+
+				for (int k = 0; k<inputWAVhdr.fmt.NumChannels; k++)
+				{
 					sample = 0; //debug
 					fread(&sample, BytesPerSample, 1, wav_in);
 					sample = sample << (32 - inputWAVhdr.fmt.BitsPerSample); // force signextend
@@ -263,18 +264,30 @@ int main(int argc, char* argv[])
 				}
 			}
 
-			for(int j=0; j<BLOCK_SIZE; j++)
+			for (int j = 0; j<BLOCK_SIZE; j++)
 			{
-				sampleBuffer[0][j] *= 0.63;
-				sampleBuffer[1][j] *= 0.63;
+				sampleBuffer[0][j] *= inputGain;
+				sampleBuffer[1][j] *= inputGain;
 			}
 
 			// Call processing on L and R channels
-			tremolo_procces(sampleBuffer[0], sampleBuffer[2], tremolo_data, BLOCK_SIZE);
-			tremolo_procces(sampleBuffer[1], sampleBuffer[3], tremolo_data, BLOCK_SIZE);
+			tremolo_procces(sampleBuffer[0], sampleBuffer[2], &tremolo_data, BLOCK_SIZE);
+			tremolo_procces(sampleBuffer[1], sampleBuffer[3], &tremolo_data, BLOCK_SIZE);
+		
+			for (int j = 0; j<BLOCK_SIZE; j++)
+			{
+				for (int k = 0; k<outputWAVhdr.fmt.NumChannels; k++)
+				{
+					sample = sampleBuffer[k][j] * SAMPLE_SCALE;	// crude, non-rounding 			
+					sample = sample >> (32 - inputWAVhdr.fmt.BitsPerSample);
+					fwrite(&sample, outputWAVhdr.fmt.BitsPerSample / 8, 1, wav_out);
+				}
+			}
 		}
 	}
-	
+
+	printf("Processing loop finished!\n");
+
 	// Close files
 	//-------------------------------------------------	
 	fclose(wav_in);

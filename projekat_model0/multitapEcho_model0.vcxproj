@@ -20,7 +20,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{27D0776B-DAFF-4002-A7CF-635A7072A7ED}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>multitapEcho_model0</RootNamespace>
+    <RootNamespace>projekat_model0</RootNamespace>
     <ProjectName>projekat_model0</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
