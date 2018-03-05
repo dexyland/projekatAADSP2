@@ -185,6 +185,38 @@ float lfo(float phase, wave_forms_t waveform)
 // @Date	02.03.2018.
 //
 // Function:
+// processing_foo
+//
+// @param - input - Buffer with input samples
+//		  - output - Buffer with output samples
+//		  - data - Control state structure
+//		  - numSamples - Length of buffer
+//
+// @return - nothing
+// Comment: process input samples
+//
+/////////////////////////////////////////////////////////////////////////////////
+void processing_foo(int outputChannelNum, tremolo_struct_t* tremolo_data)
+{
+	for (int j = 0; j < BLOCK_SIZE; j++)
+	{
+		sampleBuffer[0][j] *= inputGain;
+		sampleBuffer[1][j] *= inputGain;
+	}
+
+	// Call processing on L and R channels
+	if (outputChannelNum == 4)
+	{
+		tremolo_procces(sampleBuffer[0], sampleBuffer[2], tremolo_data, BLOCK_SIZE);
+		tremolo_procces(sampleBuffer[1], sampleBuffer[3], tremolo_data, BLOCK_SIZE);
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// @Author	Dejan Martinov
+// @Date	02.03.2018.
+//
+// Function:
 // main
 //
 // @param - argv[1] - Input file name
@@ -282,19 +314,8 @@ int main(int argc, char* argv[])
 				}
 			}
 
-			for (int j = 0; j<BLOCK_SIZE; j++)
-			{
-				sampleBuffer[0][j] *= inputGain;
-				sampleBuffer[1][j] *= inputGain;
-			}
+			processing_foo(outputChannelNum, &tremolo_data);
 
-			// Call processing on L and R channels
-			if (outputChannelNum == 4)
-			{
-				tremolo_procces(sampleBuffer[0], sampleBuffer[2], &tremolo_data, BLOCK_SIZE);
-				tremolo_procces(sampleBuffer[1], sampleBuffer[3], &tremolo_data, BLOCK_SIZE);
-			}
-		
 			for (int j = 0; j<BLOCK_SIZE; j++)
 			{
 				for (int k = 0; k<outputWAVhdr.fmt.NumChannels; k++)
