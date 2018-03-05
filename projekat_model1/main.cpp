@@ -33,6 +33,15 @@ double sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
+// Buffer pointers [L R][Ls Rs]
+/////////////////////////////////////////////////////////////////////////////////
+double* sampleBufferLeft = sampleBuffer[0];
+double* sampleBufferRight = sampleBuffer[1];
+double* sampleBufferLeftSide = sampleBuffer[2];
+double* sampleBufferRightSide = sampleBuffer[3];
+/////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////
 // Input gain. Default -4dB.
 /////////////////////////////////////////////////////////////////////////////////
 double inputGain = 0.63;
@@ -117,6 +126,8 @@ float lfo();
 void tremolo_procces(double* input, double* output)
 {
 	//float ph;
+	double* p_in = input;
+	double* p_out = output;
 
 	// Make a temporary copy of any state variables which need to be
 	// maintained between calls to processBlock(). Each channel needs to be processed identically
@@ -124,12 +135,12 @@ void tremolo_procces(double* input, double* output)
 	// the next channel.
 	//ph = tremolo_data.lfoPhase;
 
-	for (int i = 0; i < BLOCK_SIZE; ++i)
+	for (; p_in <= input + BLOCK_SIZE - 1; ++p_in, ++p_out)
 	{
-		const float in = input[i];
+		const float in = (float)*p_in;
 
 		// Ring modulation is easy! Just multiply the waveform by a periodic carrier
-		output[i] = in * (1.0f - tremolo_data.depth*lfo());
+		*p_out = in * (1.0f - tremolo_data.depth*lfo());
 
 		// Update the carrier and LFO phases, keeping them in the range 0-1
 		tremolo_data.lfoPhase += tremolo_data.LFO_frequency*tremolo_data.inverseSampleRate;
@@ -144,50 +155,54 @@ void tremolo_procces(double* input, double* output)
 
 float lfo()
 {
-	switch (tremolo_data.waveform)
+	if (tremolo_data.waveform == kWaveformTriangle)
 	{
-		case kWaveformTriangle:
-			if (tremolo_data.lfoPhase < 0.25f)
-			{
-				return 0.5f + 2.0f*tremolo_data.lfoPhase;
-			}
-			else if (tremolo_data.lfoPhase < 0.75f)
-			{
-				return 1.0f - 2.0f*(tremolo_data.lfoPhase - 0.25f);
-			}
-			else
-			{
-				return 2.0f*(tremolo_data.lfoPhase - 0.75f);
-			}
-		case kWaveformSquare:
-			if (tremolo_data.lfoPhase < 0.5f)
-			{
-				return 1.0f;
-			}
-			else
-			{
-				return 0.0f;
-			}
-		case kWaveformSquareSlopedEdges:
-			if (tremolo_data.lfoPhase < 0.48f)
-			{
-				return 1.0f;
-			}
-			else if (tremolo_data.lfoPhase < 0.5f)
-			{
-				return 1.0f - 50.0f*(tremolo_data.lfoPhase - 0.48f);
-			}
-			else if (tremolo_data.lfoPhase < 0.98f)
-			{
-				return 0.0f;
-			}
-			else
-			{
-				return 50.0f*(tremolo_data.lfoPhase - 0.98f);
-			}
-		case kWaveformSine:
-		default:
-			return 0.5f + 0.5f*sinf(2.0 * PI * tremolo_data.lfoPhase);
+		if (tremolo_data.lfoPhase < 0.25f)
+		{
+			return 0.5f + 2.0f*tremolo_data.lfoPhase;
+		}
+		else if (tremolo_data.lfoPhase < 0.75f)
+		{
+			return 1.0f - 2.0f*(tremolo_data.lfoPhase - 0.25f);
+		}
+		else
+		{
+			return 2.0f*(tremolo_data.lfoPhase - 0.75f);
+		}
+	}
+	else if (tremolo_data.waveform == kWaveformSquare)
+	{
+		if (tremolo_data.lfoPhase < 0.5f)
+		{
+			return 1.0f;
+		}
+		else
+		{
+			return 0.0f;
+		}
+	}
+	else if (tremolo_data.waveform == kWaveformSquareSlopedEdges)
+	{
+		if (tremolo_data.lfoPhase < 0.48f)
+		{
+			return 1.0f;
+		}
+		else if (tremolo_data.lfoPhase < 0.5f)
+		{
+			return 1.0f - 50.0f*(tremolo_data.lfoPhase - 0.48f);
+		}
+		else if (tremolo_data.lfoPhase < 0.98f)
+		{
+			return 0.0f;
+		}
+		else
+		{
+			return 50.0f*(tremolo_data.lfoPhase - 0.98f);
+		}
+	}
+	else
+	{
+		return 0.5f + 0.5f*sinf(2.0 * PI * tremolo_data.lfoPhase);
 	}
 }
 
@@ -210,17 +225,22 @@ float lfo()
 /////////////////////////////////////////////////////////////////////////////////
 void processing_foo()
 {
-	for (int j = 0; j < BLOCK_SIZE; j++)
+	double* p_L = sampleBufferLeft;
+	double* p_Ls = sampleBufferLeftSide;
+	double* p_R = sampleBufferRight;
+	double* p_Rs = sampleBufferRightSide;
+
+	for (; p_L <= sampleBufferLeft + BLOCK_SIZE - 1; p_L++, p_R++)
 	{
-		sampleBuffer[0][j] *= inputGain;
-		sampleBuffer[1][j] *= inputGain;
+		*p_L *= inputGain;
+		*p_R *= inputGain;
 	}
 
 	// Add tremolo effect on Ls and Rs channels
 	if (outputChannelNum == 4)
 	{
-		tremolo_procces(sampleBuffer[0], sampleBuffer[2]);
-		tremolo_procces(sampleBuffer[1], sampleBuffer[3]);
+		tremolo_procces(sampleBufferLeft, sampleBufferLeftSide);
+		tremolo_procces(sampleBufferRight, sampleBufferRightSide);
 	}
 }
 
