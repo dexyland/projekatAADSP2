@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>"..//TestStreams//Test3_WMA_v9_1pCBR_320kbps_48Khz_2.wav" "..//OutStreams//out_dugacki.wav" </LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>"..//TestStreams//speech.wav" "..//OutStreams//out_speech.wav" "0" </LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

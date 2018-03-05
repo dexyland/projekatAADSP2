@@ -201,11 +201,25 @@ int main(int argc, char* argv[])
 	char WavOutputName[256];
 	WAV_HEADER inputWAVhdr, outputWAVhdr;
 	tremolo_struct_t tremolo_data;
-
+	int outputChannelNum = 4;
 
 	// Init channel buffers
 	for (int i = 0; i<MAX_NUM_CHANNEL; i++)
 		memset(&sampleBuffer[i], 0, BLOCK_SIZE);
+
+	// check for input arguments (input gain and mode)
+	if (argc >= 4)
+	{
+		inputGain = pow(10, atoi(argv[3]) / 20.0);
+	}
+
+	if (argc == 5)
+	{
+		if (strcmp(argv[4], "2_0_0") == 0)
+		{
+			outputChannelNum = 2;
+		}
+	}
 
 	// Open input and output wav files
 	//-------------------------------------------------
@@ -223,7 +237,7 @@ int main(int argc, char* argv[])
 	// Set up output WAV header
 	//-------------------------------------------------	
 	outputWAVhdr = inputWAVhdr;
-	outputWAVhdr.fmt.NumChannels = OUTPUT_CHANNELS_NUM; // change number of channels
+	outputWAVhdr.fmt.NumChannels = outputChannelNum; // change number of channels
 
 	int oneChannelSubChunk2Size = inputWAVhdr.data.SubChunk2Size / inputWAVhdr.fmt.NumChannels;
 	int oneChannelByteRate = inputWAVhdr.fmt.ByteRate / inputWAVhdr.fmt.NumChannels;
@@ -254,13 +268,17 @@ int main(int argc, char* argv[])
 		{
 			for (int j = 0; j<BLOCK_SIZE; j++)
 			{
-
 				for (int k = 0; k<inputWAVhdr.fmt.NumChannels; k++)
 				{
 					sample = 0; //debug
 					fread(&sample, BytesPerSample, 1, wav_in);
 					sample = sample << (32 - inputWAVhdr.fmt.BitsPerSample); // force signextend
-					sampleBuffer[k][j] = sample / SAMPLE_SCALE;				// scale sample to 1.0/-1.0 range		
+					sampleBuffer[k][j] = sample / SAMPLE_SCALE;				// scale sample to 1.0/-1.0 range
+
+					if (inputWAVhdr.fmt.NumChannels == 1)
+					{
+						sampleBuffer[1][j] = sample / SAMPLE_SCALE;
+					}
 				}
 			}
 
@@ -271,8 +289,11 @@ int main(int argc, char* argv[])
 			}
 
 			// Call processing on L and R channels
-			tremolo_procces(sampleBuffer[0], sampleBuffer[2], &tremolo_data, BLOCK_SIZE);
-			tremolo_procces(sampleBuffer[1], sampleBuffer[3], &tremolo_data, BLOCK_SIZE);
+			if (outputChannelNum == 4)
+			{
+				tremolo_procces(sampleBuffer[0], sampleBuffer[2], &tremolo_data, BLOCK_SIZE);
+				tremolo_procces(sampleBuffer[1], sampleBuffer[3], &tremolo_data, BLOCK_SIZE);
+			}
 		
 			for (int j = 0; j<BLOCK_SIZE; j++)
 			{
