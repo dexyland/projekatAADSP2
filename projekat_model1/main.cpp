@@ -112,55 +112,55 @@ void tremolo_init()
 // Comment: Apply tremolo to input samples
 //
 /////////////////////////////////////////////////////////////////////////////////
-float lfo(float phase, wave_forms_t waveform);
+float lfo();
 
-void tremolo_procces(double* input, double* output, int numSamples)
+void tremolo_procces(double* input, double* output)
 {
-	float ph;
+	//float ph;
 
 	// Make a temporary copy of any state variables which need to be
 	// maintained between calls to processBlock(). Each channel needs to be processed identically
 	// which means that the activity of processing one channel can't affect the state variable for
 	// the next channel.
-	ph = tremolo_data.lfoPhase;
+	//ph = tremolo_data.lfoPhase;
 
-	for (int i = 0; i < numSamples; ++i)
+	for (int i = 0; i < BLOCK_SIZE; ++i)
 	{
 		const float in = input[i];
 
 		// Ring modulation is easy! Just multiply the waveform by a periodic carrier
-		output[i] = in * (1.0f - tremolo_data.depth*lfo(ph, tremolo_data.waveform));
+		output[i] = in * (1.0f - tremolo_data.depth*lfo());
 
 		// Update the carrier and LFO phases, keeping them in the range 0-1
-		ph += tremolo_data.LFO_frequency*tremolo_data.inverseSampleRate;
+		tremolo_data.lfoPhase += tremolo_data.LFO_frequency*tremolo_data.inverseSampleRate;
 
-		if (ph >= 1.0)
-			ph -= 1.0;
+		if (tremolo_data.lfoPhase >= 1.0)
+			tremolo_data.lfoPhase -= 1.0;
 	}
 	// Having made a local copy of the state variables for each channel, now transfer the result
 	// back to the main state variable so they will be preserved for the next call of processBlock()
-	tremolo_data.lfoPhase = ph;
+	//tremolo_data.lfoPhase = ph;
 }
 
-float lfo(float phase, wave_forms_t waveform)
+float lfo()
 {
-	switch (waveform)
+	switch (tremolo_data.waveform)
 	{
 		case kWaveformTriangle:
-			if (phase < 0.25f)
+			if (tremolo_data.lfoPhase < 0.25f)
 			{
-				return 0.5f + 2.0f*phase;
+				return 0.5f + 2.0f*tremolo_data.lfoPhase;
 			}
-			else if (phase < 0.75f)
+			else if (tremolo_data.lfoPhase < 0.75f)
 			{
-				return 1.0f - 2.0f*(phase - 0.25f);
+				return 1.0f - 2.0f*(tremolo_data.lfoPhase - 0.25f);
 			}
 			else
 			{
-				return 2.0f*(phase - 0.75f);
+				return 2.0f*(tremolo_data.lfoPhase - 0.75f);
 			}
 		case kWaveformSquare:
-			if (phase < 0.5f)
+			if (tremolo_data.lfoPhase < 0.5f)
 			{
 				return 1.0f;
 			}
@@ -169,25 +169,25 @@ float lfo(float phase, wave_forms_t waveform)
 				return 0.0f;
 			}
 		case kWaveformSquareSlopedEdges:
-			if (phase < 0.48f)
+			if (tremolo_data.lfoPhase < 0.48f)
 			{
 				return 1.0f;
 			}
-			else if (phase < 0.5f)
+			else if (tremolo_data.lfoPhase < 0.5f)
 			{
-				return 1.0f - 50.0f*(phase - 0.48f);
+				return 1.0f - 50.0f*(tremolo_data.lfoPhase - 0.48f);
 			}
-			else if (phase < 0.98f)
+			else if (tremolo_data.lfoPhase < 0.98f)
 			{
 				return 0.0f;
 			}
 			else
 			{
-				return 50.0f*(phase - 0.98f);
+				return 50.0f*(tremolo_data.lfoPhase - 0.98f);
 			}
 		case kWaveformSine:
 		default:
-			return 0.5f + 0.5f*sinf(2.0 * PI * phase);
+			return 0.5f + 0.5f*sinf(2.0 * PI * tremolo_data.lfoPhase);
 	}
 }
 
@@ -219,8 +219,8 @@ void processing_foo()
 	// Add tremolo effect on Ls and Rs channels
 	if (outputChannelNum == 4)
 	{
-		tremolo_procces(sampleBuffer[0], sampleBuffer[2], BLOCK_SIZE);
-		tremolo_procces(sampleBuffer[1], sampleBuffer[3], BLOCK_SIZE);
+		tremolo_procces(sampleBuffer[0], sampleBuffer[2]);
+		tremolo_procces(sampleBuffer[1], sampleBuffer[3]);
 	}
 }
 

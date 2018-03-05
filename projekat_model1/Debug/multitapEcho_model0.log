@@ -3,11 +3,11 @@
 c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(96): warning C4305: '=': truncation from 'double' to 'float'
 c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(129): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(129): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(190): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(335): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(270): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(191): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(336): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(271): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(272): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(273): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
   multitapEcho_model0.vcxproj -> C:\materija\ra94-2013\aadsp2\projekatAADSP2\projekat_model1\Debug\projekat_model1.exe
   multitapEcho_model0.vcxproj -> C:\materija\ra94-2013\aadsp2\projekatAADSP2\projekat_model1\Debug\projekat_model1.pdb (Full PDB)
