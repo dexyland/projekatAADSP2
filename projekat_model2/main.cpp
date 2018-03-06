@@ -27,6 +27,7 @@
 #define SAMPLE_RATE 48000
 #define PI 3.14159265358979323846
 #define OUTPUT_CHANNELS_NUM 4
+#define INVERSE_SAMPLE_RATE  ACCUM_NUM(1.0 / SAMPLE_RATE)
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -72,10 +73,10 @@ typedef enum
 typedef struct {
 	DSPint numChannels;
 	DSPfract LFO_frequency;			// LFO frequency (Hz)
-	DSPfract depth;					// Depth of effect (0-1)
+	DSPaccum depth;					// Depth of effect (0-1)
 	wave_forms_t   waveform;		// What shape should be used for the LFO
-	DSPfract lfoPhase;
-	DSPfract inverseSampleRate;
+	DSPaccum lfoPhase;
+	DSPaccum inverseSampleRate;
 } tremolo_struct_t;
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -105,7 +106,7 @@ void tremolo_init()
 	tremolo_data.depth = 1.0;
 	tremolo_data.waveform = kWaveformSquare;
 	tremolo_data.lfoPhase = 0.0;
-	tremolo_data.inverseSampleRate = 1.0 / SAMPLE_RATE;
+	tremolo_data.inverseSampleRate = INVERSE_SAMPLE_RATE;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -124,11 +125,11 @@ void tremolo_init()
 // Comment: Apply tremolo to input samples
 //
 /////////////////////////////////////////////////////////////////////////////////
-DSPfract lfo();
+DSPaccum lfo();
 
 void tremolo_procces(DSPfract* input, DSPfract* output)
 {
-	//float ph;
+	DSPaccum ph;
 	DSPfract* p_in = input;
 	DSPfract* p_out = output;
 	DSPaccum temp;
@@ -138,7 +139,7 @@ void tremolo_procces(DSPfract* input, DSPfract* output)
 	// maintained between calls to processBlock(). Each channel needs to be processed identically
 	// which means that the activity of processing one channel can't affect the state variable for
 	// the next channel.
-	//ph = tremolo_data.lfoPhase;
+	ph = tremolo_data.lfoPhase;
 
 	for (; p_in <= input + BLOCK_SIZE - 1; ++p_in, ++p_out)
 	{
@@ -147,64 +148,64 @@ void tremolo_procces(DSPfract* input, DSPfract* output)
 		// Ring modulation is easy! Just multiply the waveform by a periodic carrier
 		temp = tremolo_data.depth*lfo();
 		outVal = *p_in * (FRACT_NUM(1.0) - (DSPfract)temp);
-		*p_out = outVal;
+		*p_out = (DSPfract)outVal;
 
 		// Update the carrier and LFO phases, keeping them in the range 0-1
-		tremolo_data.lfoPhase += tremolo_data.LFO_frequency*tremolo_data.inverseSampleRate;
+		ph += tremolo_data.inverseSampleRate;
 
-		if (tremolo_data.lfoPhase >= FRACT_NUM(1.0))
-			tremolo_data.lfoPhase -= FRACT_NUM(1.0);
+		if (ph >= ACCUM_NUM(1.0))
+			ph -= ACCUM_NUM(1.0);
 	}
 	// Having made a local copy of the state variables for each channel, now transfer the result
 	// back to the main state variable so they will be preserved for the next call of processBlock()
-	//tremolo_data.lfoPhase = ph;
+	tremolo_data.lfoPhase = ph;
 }
 
-DSPfract lfo()
+DSPaccum lfo()
 {
 	if (tremolo_data.waveform == kWaveformTriangle)
 	{
-		if (tremolo_data.lfoPhase < FRACT_NUM(0.25))
+		if (tremolo_data.lfoPhase < ACCUM_NUM(0.25))
 		{
-			return FRACT_NUM(0.5) + FRACT_NUM(2.0)*tremolo_data.lfoPhase;
+			return ACCUM_NUM(0.5) + (tremolo_data.lfoPhase<<1);
 		}
-		else if (tremolo_data.lfoPhase < FRACT_NUM(0.75))
+		else if (tremolo_data.lfoPhase < ACCUM_NUM(0.75))
 		{
-			return FRACT_NUM(1.0) - FRACT_NUM(2.0)*(tremolo_data.lfoPhase - FRACT_NUM(0.25));
+			return ACCUM_NUM(1.0) - ((tremolo_data.lfoPhase - ACCUM_NUM(0.25))<<1);
 		}
 		else
 		{
-			return FRACT_NUM(2.0)*(tremolo_data.lfoPhase - FRACT_NUM(0.75));
+			return (tremolo_data.lfoPhase - ACCUM_NUM(0.75))<<1;
 		}
 	}
 	else if (tremolo_data.waveform == kWaveformSquare)
 	{
-		if (tremolo_data.lfoPhase < FRACT_NUM(0.5))
+		if (tremolo_data.lfoPhase < ACCUM_NUM(0.5))
 		{
-			return FRACT_NUM(1.0);
+			return ACCUM_NUM(1.0);
 		}
 		else
 		{
-			return FRACT_NUM(0.0);
+			return ACCUM_NUM(0.0);
 		}
 	}
 	else if (tremolo_data.waveform == kWaveformSquareSlopedEdges)
 	{
-		if (tremolo_data.lfoPhase < FRACT_NUM(0.48))
+		if (tremolo_data.lfoPhase < ACCUM_NUM(0.48))
 		{
-			return FRACT_NUM(1.0);
+			return ACCUM_NUM(1.0);
 		}
-		else if (tremolo_data.lfoPhase < FRACT_NUM(0.5))
+		else if (tremolo_data.lfoPhase < ACCUM_NUM(0.5))
 		{
-			return FRACT_NUM(1.0) - FRACT_NUM(50.0)*(tremolo_data.lfoPhase - FRACT_NUM(0.48));
+			return ACCUM_NUM(1.0) - (ACCUM_NUM(0.78125) << 6)*(tremolo_data.lfoPhase - ACCUM_NUM(0.48));
 		}
-		else if (tremolo_data.lfoPhase < FRACT_NUM(0.98))
+		else if (tremolo_data.lfoPhase < ACCUM_NUM(0.98))
 		{
-			return FRACT_NUM(0.0);
+			return ACCUM_NUM(0.0);
 		}
 		else
 		{
-			return FRACT_NUM(50.0)*(tremolo_data.lfoPhase - FRACT_NUM(0.98));
+			return (ACCUM_NUM(0.78125)<<6) * (tremolo_data.lfoPhase - ACCUM_NUM(0.98));
 		}
 	}
 	else
@@ -244,7 +245,7 @@ void processing_foo()
 		*p_L = temp;
 
 		temp = *p_R * inputGain;
-		*p_L = temp;
+		*p_R = temp;
 	}
 
 	// Add tremolo effect on Ls and Rs channels
@@ -364,7 +365,7 @@ DSPint main(DSPint argc, char* argv[])
 			{
 				for (int k = 0; k<outputWAVhdr.fmt.NumChannels; k++)
 				{
-					//sample = sampleBuffer[k][j] * SAMPLE_SCALE;	// crude, non-rounding 			
+					sample = sampleBuffer[k][j].toLong();	// crude, non-rounding 			
 					sample = sample >> (32 - inputWAVhdr.fmt.BitsPerSample);
 					fwrite(&sample, outputWAVhdr.fmt.BitsPerSample / 8, 1, wav_out);
 				}

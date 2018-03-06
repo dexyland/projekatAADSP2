@@ -24,6 +24,7 @@
 #define SAMPLE_RATE 48000
 #define PI 3.14159265358979323846
 #define OUTPUT_CHANNELS_NUM 4
+#define INVERSE_SAMPLE_RATE 0.000020833333333333316
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -100,9 +101,9 @@ void tremolo_init()
 	// Set default values:
 	tremolo_data.LFO_frequency = 2.0;
 	tremolo_data.depth = 1.0;
-	tremolo_data.waveform = kWaveformSine;
+	tremolo_data.waveform = kWaveformSquare;
 	tremolo_data.lfoPhase = 0.0;
-	tremolo_data.inverseSampleRate = 1.0 / SAMPLE_RATE;
+	tremolo_data.inverseSampleRate = INVERSE_SAMPLE_RATE;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -125,7 +126,7 @@ float lfo();
 
 void tremolo_procces(double* input, double* output)
 {
-	//float ph;
+	float ph;
 	double* p_in = input;
 	double* p_out = output;
 
@@ -133,7 +134,7 @@ void tremolo_procces(double* input, double* output)
 	// maintained between calls to processBlock(). Each channel needs to be processed identically
 	// which means that the activity of processing one channel can't affect the state variable for
 	// the next channel.
-	//ph = tremolo_data.lfoPhase;
+	ph = tremolo_data.lfoPhase;
 
 	for (; p_in <= input + BLOCK_SIZE - 1; ++p_in, ++p_out)
 	{
@@ -143,14 +144,14 @@ void tremolo_procces(double* input, double* output)
 		*p_out = in * (1.0f - tremolo_data.depth*lfo());
 
 		// Update the carrier and LFO phases, keeping them in the range 0-1
-		tremolo_data.lfoPhase += tremolo_data.LFO_frequency*tremolo_data.inverseSampleRate;
+		ph += tremolo_data.inverseSampleRate;
 
-		if (tremolo_data.lfoPhase >= 1.0)
-			tremolo_data.lfoPhase -= 1.0;
+		if (ph >= 1.0)
+			ph -= 1.0;
 	}
 	// Having made a local copy of the state variables for each channel, now transfer the result
 	// back to the main state variable so they will be preserved for the next call of processBlock()
-	//tremolo_data.lfoPhase = ph;
+	tremolo_data.lfoPhase = ph;
 }
 
 float lfo()

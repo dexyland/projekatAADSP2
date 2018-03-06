@@ -4,4 +4,8 @@
     <LocalDebuggerCommandArguments>"..//TestStreams//titanic_horn.wav" "..//OutStreams//model1_out_titanic.wav" "-4" </LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LocalDebuggerCommandArguments>"..//TestStreams//titanic_horn.wav" "..//OutStreams//model1_out_titanic.wav" "-4" </LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
 </Project>
