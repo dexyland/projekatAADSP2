@@ -46,10 +46,17 @@ C:/CirrusDSP/bin/ccc2 C:/materija/ra94-2013/aadsp2/projekatAADSP2/projekat_model
      [exec]   typedef unsigned int size_t;
      [exec]                        ^
      [exec] 
-     [exec] "C:/materija/ra94-2013/aadsp2/projekatAADSP2/projekat_model3/inc/common.h", line 20: error #20: identifier "long_accum" is undefined
-     [exec]   typedef long_accum DSPac
-     [exec] cum;			/* DSP fixed-point fractional */
-     [exec]           ^
+     [exec] "C:/materija/ra94-2013/aadsp2/projekatAADSP2/projekat_model3/src/main.cpp", line 115: error #20: identifier "INVERSE_SAMPLE_RATElk" is undefined
+     [exec]   	tremolo_data.inverseSampleRate = ACCUM_NUM(INVERSE_SAMPLE_RATE);
+     [exec]   	                                 ^
+     [exec] 
+     [exec] "C:/materija/ra94-2013/aadsp2/projekatAADSP2/projekat_model3/src/main.cpp", line 216: warning #31: fixed point constant is out of range
+     [exec]   			return ACCUM_NUM(1.0);
+     [exec]   			       ^
+     [exec] 
+     [exec] "C:/materija/ra94-2013/aadsp2/projekatAADSP2/projekat_model3/src/main.cpp", line 224: warning #31: fixed point constant is out of range
+     [exec]   			return ACCUM_NUM(0.0);
+     [exec]   			       ^
      [exec] 
      [exec] WARNING: '-unsafe-loop-optimization' is ignored when '-g' option is used!
 
