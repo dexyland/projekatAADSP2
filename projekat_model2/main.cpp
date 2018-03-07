@@ -27,7 +27,7 @@
 #define SAMPLE_RATE 48000
 #define PI 3.14159265358979323846
 #define OUTPUT_CHANNELS_NUM 4
-#define INVERSE_SAMPLE_RATE  ACCUM_NUM(1.0 / SAMPLE_RATE)
+#define INVERSE_SAMPLE_RATE  0.00002083333333333333333
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -73,9 +73,9 @@ typedef enum
 typedef struct {
 	DSPint numChannels;
 	DSPfract LFO_frequency;			// LFO frequency (Hz)
-	DSPaccum depth;					// Depth of effect (0-1)
+	DSPfract depth;					// Depth of effect (0-1)
 	wave_forms_t   waveform;		// What shape should be used for the LFO
-	DSPaccum lfoPhase;
+	DSPfract lfoPhase;
 	DSPaccum inverseSampleRate;
 } tremolo_struct_t;
 /////////////////////////////////////////////////////////////////////////////////
@@ -102,11 +102,11 @@ tremolo_struct_t tremolo_data;
 void tremolo_init()
 {
 	// Set default values:
-	tremolo_data.LFO_frequency = 2.0;
-	tremolo_data.depth = 1.0;
+	tremolo_data.LFO_frequency = FRACT_NUM(1.0);
+	tremolo_data.depth = FRACT_NUM(1.0);
 	tremolo_data.waveform = kWaveformSquare;
-	tremolo_data.lfoPhase = 0.0;
-	tremolo_data.inverseSampleRate = INVERSE_SAMPLE_RATE;
+	tremolo_data.lfoPhase = FRACT_NUM(0.0);
+	tremolo_data.inverseSampleRate = ACCUM_NUM(INVERSE_SAMPLE_RATE);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -125,15 +125,24 @@ void tremolo_init()
 // Comment: Apply tremolo to input samples
 //
 /////////////////////////////////////////////////////////////////////////////////
-DSPaccum lfo();
+DSPfract lfo(DSPaccum phase);
 
 void tremolo_procces(DSPfract* input, DSPfract* output)
 {
+	/*DSPaccum ph;
+	DSPaccum temp_phase;
+	DSPaccum temp_depth;
+	DSPfract* p_in = input;
+	DSPfract* p_out = output;
+	DSPfract temp_lfo;
+	DSPaccum outVal;
+	*/
 	DSPaccum ph;
 	DSPfract* p_in = input;
 	DSPfract* p_out = output;
-	DSPaccum temp;
-	DSPaccum outVal;
+	DSPfract temp_lfo = FRACT_NUM(0.0);
+	DSPaccum temp_depth;
+	DSPaccum temp_phase;
 
 	// Make a temporary copy of any state variables which need to be
 	// maintained between calls to processBlock(). Each channel needs to be processed identically
@@ -146,71 +155,76 @@ void tremolo_procces(DSPfract* input, DSPfract* output)
 		//const DSPfract in = (DSPfract)*p_in;
 
 		// Ring modulation is easy! Just multiply the waveform by a periodic carrier
-		temp = tremolo_data.depth*lfo();
-		outVal = *p_in * (FRACT_NUM(1.0) - (DSPfract)temp);
+		temp_lfo = lfo(ph);
+		temp_depth = tremolo_data.depth * temp_lfo;
+		*p_out = *p_in * (FRACT_NUM(1.0) - temp_depth);
+
+	/*	temp = tremolo_data.depth*lfo(ph);
+		outVal = (DSPaccum)*p_in *(ACCUM_NUM(1.0) - temp);
 		*p_out = (DSPfract)outVal;
-
+*/
 		// Update the carrier and LFO phases, keeping them in the range 0-1
-		ph += tremolo_data.inverseSampleRate;
+		temp_phase = tremolo_data.inverseSampleRate;
+		ph = ph + temp_phase;
 
-		if (ph >= ACCUM_NUM(1.0))
-			ph -= ACCUM_NUM(1.0);
+		if (ph >= FRACT_NUM(1.0))
+			ph -= FRACT_NUM(1.0);
 	}
 	// Having made a local copy of the state variables for each channel, now transfer the result
 	// back to the main state variable so they will be preserved for the next call of processBlock()
 	tremolo_data.lfoPhase = ph;
 }
 
-DSPaccum lfo()
+DSPfract lfo(DSPaccum phase)
 {
 	if (tremolo_data.waveform == kWaveformTriangle)
 	{
-		if (tremolo_data.lfoPhase < ACCUM_NUM(0.25))
+		if (phase < ACCUM_NUM(0.25))
 		{
-			return ACCUM_NUM(0.5) + (tremolo_data.lfoPhase<<1);
+			return ACCUM_NUM(0.5) + (phase<<1);
 		}
-		else if (tremolo_data.lfoPhase < ACCUM_NUM(0.75))
+		else if (phase < ACCUM_NUM(0.75))
 		{
-			return ACCUM_NUM(1.0) - ((tremolo_data.lfoPhase - ACCUM_NUM(0.25))<<1);
+			return ACCUM_NUM(1.0) - ((phase - ACCUM_NUM(0.25))<<1);
 		}
 		else
 		{
-			return (tremolo_data.lfoPhase - ACCUM_NUM(0.75))<<1;
+			return (phase - ACCUM_NUM(0.75))<<1;
 		}
 	}
 	else if (tremolo_data.waveform == kWaveformSquare)
 	{
-		if (tremolo_data.lfoPhase < ACCUM_NUM(0.5))
+		if (phase < FRACT_NUM(0.5))
 		{
-			return ACCUM_NUM(1.0);
+			return FRACT_NUM(1.0);
 		}
 		else
 		{
-			return ACCUM_NUM(0.0);
+			return FRACT_NUM(0.0);
 		}
 	}
 	else if (tremolo_data.waveform == kWaveformSquareSlopedEdges)
 	{
-		if (tremolo_data.lfoPhase < ACCUM_NUM(0.48))
+		if (phase < ACCUM_NUM(0.48))
 		{
 			return ACCUM_NUM(1.0);
 		}
-		else if (tremolo_data.lfoPhase < ACCUM_NUM(0.5))
+		else if (phase < ACCUM_NUM(0.5))
 		{
-			return ACCUM_NUM(1.0) - (ACCUM_NUM(0.78125) << 6)*(tremolo_data.lfoPhase - ACCUM_NUM(0.48));
+			return ACCUM_NUM(1.0) - (ACCUM_NUM(0.78125) << 6)*(phase - ACCUM_NUM(0.48));
 		}
-		else if (tremolo_data.lfoPhase < ACCUM_NUM(0.98))
+		else if (phase < ACCUM_NUM(0.98))
 		{
 			return ACCUM_NUM(0.0);
 		}
 		else
 		{
-			return (ACCUM_NUM(0.78125)<<6) * (tremolo_data.lfoPhase - ACCUM_NUM(0.98));
+			return (ACCUM_NUM(0.78125)<<6) * (phase - ACCUM_NUM(0.98));
 		}
 	}
 	else
 	{
-		//return FRACT_NUM(0.5) + FRACT_NUM(0.5)*sinf(2.0 * PI * tremolo_data.lfoPhase);
+		//return FRACT_NUM(0.5) + FRACT_NUM(0.5)*sinf(2.0 * PI * phase);
 	}
 }
 
@@ -383,3 +397,4 @@ DSPint main(DSPint argc, char* argv[])
 
 	return 0;
 }
+

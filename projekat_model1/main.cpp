@@ -24,7 +24,7 @@
 #define SAMPLE_RATE 48000
 #define PI 3.14159265358979323846
 #define OUTPUT_CHANNELS_NUM 4
-#define INVERSE_SAMPLE_RATE 0.000020833333333333316
+#define INVERSE_SAMPLE_RATE 0.00002083333333333333333
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -69,11 +69,11 @@ typedef enum
 // Adjustable parameters:
 typedef struct {
 	int numChannels;
-	float LFO_frequency;			// LFO frequency (Hz)
-	float depth;					// Depth of effect (0-1)
+	double LFO_frequency;			// LFO frequency (Hz)
+	double depth;					// Depth of effect (0-1)
 	wave_forms_t   waveform;		// What shape should be used for the LFO
-	float lfoPhase;
-	float inverseSampleRate;
+	double lfoPhase;
+	double inverseSampleRate;
 } tremolo_struct_t;
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -99,7 +99,7 @@ tremolo_struct_t tremolo_data;
 void tremolo_init()
 {
 	// Set default values:
-	tremolo_data.LFO_frequency = 2.0;
+	tremolo_data.LFO_frequency = 1.0;
 	tremolo_data.depth = 1.0;
 	tremolo_data.waveform = kWaveformSquare;
 	tremolo_data.lfoPhase = 0.0;
@@ -122,11 +122,11 @@ void tremolo_init()
 // Comment: Apply tremolo to input samples
 //
 /////////////////////////////////////////////////////////////////////////////////
-float lfo();
+double lfo(double phase);
 
 void tremolo_procces(double* input, double* output)
 {
-	float ph;
+	double ph;
 	double* p_in = input;
 	double* p_out = output;
 
@@ -141,7 +141,7 @@ void tremolo_procces(double* input, double* output)
 		const float in = (float)*p_in;
 
 		// Ring modulation is easy! Just multiply the waveform by a periodic carrier
-		*p_out = in * (1.0f - tremolo_data.depth*lfo());
+		*p_out = in * (1.0f - tremolo_data.depth*lfo(ph));
 
 		// Update the carrier and LFO phases, keeping them in the range 0-1
 		ph += tremolo_data.inverseSampleRate;
@@ -154,26 +154,26 @@ void tremolo_procces(double* input, double* output)
 	tremolo_data.lfoPhase = ph;
 }
 
-float lfo()
+double lfo(double phase)
 {
 	if (tremolo_data.waveform == kWaveformTriangle)
 	{
-		if (tremolo_data.lfoPhase < 0.25f)
+		if (phase < 0.25f)
 		{
-			return 0.5f + 2.0f*tremolo_data.lfoPhase;
+			return 0.5f + 2.0f*phase;
 		}
-		else if (tremolo_data.lfoPhase < 0.75f)
+		else if (phase < 0.75f)
 		{
-			return 1.0f - 2.0f*(tremolo_data.lfoPhase - 0.25f);
+			return 1.0f - 2.0f*(phase - 0.25f);
 		}
 		else
 		{
-			return 2.0f*(tremolo_data.lfoPhase - 0.75f);
+			return 2.0f*(phase - 0.75f);
 		}
 	}
 	else if (tremolo_data.waveform == kWaveformSquare)
 	{
-		if (tremolo_data.lfoPhase < 0.5f)
+		if (phase < 0.5f)
 		{
 			return 1.0f;
 		}
@@ -184,26 +184,26 @@ float lfo()
 	}
 	else if (tremolo_data.waveform == kWaveformSquareSlopedEdges)
 	{
-		if (tremolo_data.lfoPhase < 0.48f)
+		if (phase < 0.48f)
 		{
 			return 1.0f;
 		}
-		else if (tremolo_data.lfoPhase < 0.5f)
+		else if (phase < 0.5f)
 		{
-			return 1.0f - 50.0f*(tremolo_data.lfoPhase - 0.48f);
+			return 1.0f - 50.0f*(phase - 0.48f);
 		}
-		else if (tremolo_data.lfoPhase < 0.98f)
+		else if (phase < 0.98f)
 		{
 			return 0.0f;
 		}
 		else
 		{
-			return 50.0f*(tremolo_data.lfoPhase - 0.98f);
+			return 50.0f*(phase - 0.98f);
 		}
 	}
 	else
 	{
-		return 0.5f + 0.5f*sinf(2.0 * PI * tremolo_data.lfoPhase);
+		return 0.5f + 0.5f*sinf(2.0 * PI * phase);
 	}
 }
 

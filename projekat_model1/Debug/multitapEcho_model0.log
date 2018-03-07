@@ -1,16 +1,10 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (multitapEcho_model0.vcxproj, projekat_model0.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   main.cpp
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(106): warning C4305: '=': truncation from 'double' to 'float'
 c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(206): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(356): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
 c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(291): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
 c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(293): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
-  WAVheader.cpp
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\wavheader.cpp(84): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
-  Generating Code...
-  LINK : C:\materija\ra94-2013\aadsp2\projekatAADSP2\projekat_model1\Debug\projekat_model1.exe not found or not built by the last incremental link; performing full link
   multitapEcho_model0.vcxproj -> C:\materija\ra94-2013\aadsp2\projekatAADSP2\projekat_model1\Debug\projekat_model1.exe
   multitapEcho_model0.vcxproj -> C:\materija\ra94-2013\aadsp2\projekatAADSP2\projekat_model1\Debug\projekat_model1.pdb (Full PDB)
