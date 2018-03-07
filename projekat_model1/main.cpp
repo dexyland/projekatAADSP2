@@ -23,7 +23,6 @@
 #define MAX_NUM_CHANNEL 8
 #define SAMPLE_RATE 48000
 #define PI 3.14159265358979323846
-#define OUTPUT_CHANNELS_NUM 4
 #define INVERSE_SAMPLE_RATE 0.00002083333333333333333
 /////////////////////////////////////////////////////////////////////////////////
 

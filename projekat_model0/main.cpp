@@ -23,7 +23,7 @@
 #define MAX_NUM_CHANNEL 8
 #define SAMPLE_RATE 48000
 #define PI 3.14159265358979323846
-#define OUTPUT_CHANNELS_NUM 4
+#define INVERSE_SAMPLE_RATE 0.00002083333333333333333
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -53,11 +53,11 @@ typedef enum
 // Adjustable parameters:
 typedef struct {
 	int numChannels;
-	float LFO_frequency;			// LFO frequency (Hz)
-	float depth;					// Depth of effect (0-1)
+	double LFO_frequency;			// LFO frequency (Hz)
+	double depth;					// Depth of effect (0-1)
 	wave_forms_t   waveform;		// What shape should be used for the LFO
-	float lfoPhase;
-	float inverseSampleRate;
+	double lfoPhase;
+	double inverseSampleRate;
 } tremolo_struct_t;
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -77,11 +77,11 @@ typedef struct {
 void tremolo_init(tremolo_struct_t * tremolo_data)
 {
 	// Set default values:
-	tremolo_data->LFO_frequency = 2.0;
+	tremolo_data->LFO_frequency = 1.0;
 	tremolo_data->depth = 1.0;
-	tremolo_data->waveform = kWaveformSine;
+	tremolo_data->waveform = kWaveformSquare;
 	tremolo_data->lfoPhase = 0.0;
-	tremolo_data->inverseSampleRate = 1.0 / SAMPLE_RATE;
+	tremolo_data->inverseSampleRate = INVERSE_SAMPLE_RATE;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -100,11 +100,11 @@ void tremolo_init(tremolo_struct_t * tremolo_data)
 // Comment: Apply tremolo to input samples
 //
 /////////////////////////////////////////////////////////////////////////////////
-float lfo(float phase, wave_forms_t waveform);
+double lfo(double phase, wave_forms_t waveform);
 
 void tremolo_procces(double* input, double* output, tremolo_struct_t* data, int numSamples)
 {
-	float ph;
+	double ph;
 
 	// Make a temporary copy of any state variables which need to be
 	// maintained between calls to processBlock(). Each channel needs to be processed identically
@@ -130,7 +130,7 @@ void tremolo_procces(double* input, double* output, tremolo_struct_t* data, int 
 	data->lfoPhase = ph;
 }
 
-float lfo(float phase, wave_forms_t waveform)
+double lfo(double phase, wave_forms_t waveform)
 {
 	switch (waveform)
 	{
