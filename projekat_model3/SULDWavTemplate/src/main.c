@@ -2,7 +2,7 @@
 #include <dsplib\wavefile.h>
 #include <stdfix.h>
 #include <string.h>
-#include"common.h"
+#include "common.h"
 
 #define BLOCK_SIZE 16
 #define MAX_NUM_CHANNEL 8
@@ -14,15 +14,15 @@ fract sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
 ////////////////////////////////////////////////////////////////
 // Buffer pointers [L R][Ls Rs]
 ////////////////////////////////////////////////////////////////
-__memY fract* sampleBufferLeft = sampleBuffer[0];
-__memY fract* sampleBufferRight = sampleBuffer[1];
-__memY fract* sampleBufferLeftSide = sampleBuffer[2];
-__memY fract* sampleBufferRightSide = sampleBuffer[3];
+__memY DSPfract* sampleBufferLeft = sampleBuffer[0];
+__memY DSPfract* sampleBufferRight = sampleBuffer[1];
+__memY DSPfract* sampleBufferLeftSide = sampleBuffer[2];
+__memY DSPfract* sampleBufferRightSide = sampleBuffer[3];
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 // Input gain. Default -4dB.
 ////////////////////////////////////////////////////////////////
-fract inputGain;
+DSPfract inputGain;
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 // Number of output channels. Default 4.
@@ -44,11 +44,11 @@ typedef enum
 // Adjustable parameters:
 typedef struct {
 	int numChannels;
-	fract LFO_frequency;			// LFO frequency (Hz)
-	fract depth;					// Depth of effect (0-1)
+	DSPfract LFO_frequency;			// LFO frequency (Hz)
+	DSPfract depth;					// Depth of effect (0-1)
 	wave_forms_t   waveform;		// What shape should be used for the LFO
-	fract lfoPhase;
-	accum inverseSampleRate;
+	DSPfract lfoPhase;
+	DSPaccum inverseSampleRate;
 } tremolo_struct_t;
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -97,7 +97,7 @@ void tremolo_init()
 // Comment: Apply tremolo to input samples
 //
 /////////////////////////////////////////////////////////////////////////////////
-fract lfo(accum phase);
+DSPfract lfo(DSPaccum phase);
 
 void tremolo_procces(__memY fract* input, __memY fract* output)
 {
@@ -109,12 +109,12 @@ void tremolo_procces(__memY fract* input, __memY fract* output)
 	DSPfract temp_lfo;
 	DSPaccum outVal;
 	*/
-	accum ph;
-	__memY fract* p_in = input;
-	__memY fract* p_out = output;
-	fract temp_lfo = FRACT_NUM(0.0);
-	accum temp_depth;
-	accum temp_phase;
+	DSPaccum ph;
+	__memY DSPfract* p_in = input;
+	__memY DSPfract* p_out = output;
+	DSPfract temp_lfo = FRACT_NUM(0.0);
+	DSPaccum temp_depth;
+	DSPaccum temp_phase;
 
 	// Make a temporary copy of any state variables which need to be
 	// maintained between calls to processBlock(). Each channel needs to be processed identically
@@ -147,7 +147,7 @@ void tremolo_procces(__memY fract* input, __memY fract* output)
 	tremolo_data.lfoPhase = ph;
 }
 
-fract lfo(accum phase)
+DSPfract lfo(DSPaccum phase)
 {
 	if (tremolo_data.waveform == kWaveformTriangle)
 	{
@@ -219,9 +219,9 @@ fract lfo(accum phase)
 /////////////////////////////////////////////////////////////////////////////////
 void processing_foo()
 {
-	__memY fract* p_L = sampleBufferLeft;
-	__memY fract* p_R = sampleBufferRight;
-	accum temp;
+	__memY DSPfract* p_L = sampleBufferLeft;
+	__memY DSPfract* p_R = sampleBufferRight;
+	DSPaccum temp;
 
 	for (; p_L <= sampleBufferLeft + BLOCK_SIZE - 1; p_L++, p_R++)
 	{
@@ -303,6 +303,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 	//-------------------------------------------------
+	tremolo_init();
 	
 	// Processing loop
 	//-------------------------------------------------	

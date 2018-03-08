@@ -7,7 +7,7 @@
 cd projekat_model3\SULDWavTemplate\
 
 
-c:\CirrusDSP\bin\cmdline_simulator.exe -project SimulatorConfigurationTemp.sbr -max_cycles 100000000
+c:\CirrusDSP\bin\cmdline_simulator.exe -project SimulatorConfigurationTemp.sbr -max_cycles 10000000
 
 
 cd ..
