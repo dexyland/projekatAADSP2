@@ -1,8 +1,8 @@
 : Delete log files first.
 cd OutCmp
 
-del out_2ch_contour//out_2ch_contour_model0_vs_model1.txt
-del out_2ch_contour//out_2ch_contour_model1_vs_model2.txt
+del out_2ch_contour_model0_vs_model1.txt
+del out_2ch_contour_model1_vs_model2.txt
 :del whiteNoise_Model2_vs_Model3.txt
 
 cd ..
@@ -107,15 +107,15 @@ cd ..
 
 : Execute Model 0, Model 1, Model 2 and Model 3 with titanic_horn test stream
 cd projekat_model0//Debug
-"projekat_model0.exe" "..//..//TestStreams//titanic_horn.wav" "..//..//OutStreams//titanic_horn_model0.wav" "-4"
+"projekat_model0.exe" "..//..//TestStreams//titanic_horn.wav" "..//..//OutStreams//out_titanic_horn_model0.wav" "-4"
 cd .. 
 cd ..
 cd projekat_model1//Debug
-"projekat_model1.exe" "..//..//TestStreams//titanic_horn.wav" "..//..//OutStreams//titanic_horn_model1.wav" "-4"
+"projekat_model1.exe" "..//..//TestStreams//titanic_horn.wav" "..//..//OutStreams//out_titanic_horn_model1.wav" "-4"
 cd ..
 cd ..
 cd projekat_model2//Debug
-"projekat_model2.exe" "..//..//TestStreams//titanic_horn.wav" "..//..//OutStreams//titanic_horn_model2.wav" "-4"
+"projekat_model2.exe" "..//..//TestStreams//titanic_horn.wav" "..//..//OutStreams//out_titanic_horn_model2.wav" "-4"
 cd ..
 cd ..
 
@@ -151,10 +151,10 @@ cd ..
 
 : Generate new logs
 :out_2ch_contour
-echo model0 vs model1: >> OutCmp//out_2ch_contour//model0_vs_model1.txt
-"tools//PCMCompare.exe" OutStreams//out_2ch_contour_ne40_24b_48k_model0.wav OutStreams//out_2ch_contour_ne40_24b_48k_model1.wav >> OutCmp//out_2ch_contour//model0_vs_model1.txt
-echo model1 vs model2: >> OutCmp//out_2ch_contour//model1_vs_model2.txt
-"tools//PCMCompare.exe" OutStreams//out_2ch_contour_ne40_24b_48k_model1.wav OutStreams//out_2ch_contour_ne40_24b_48k_model2.wav >> OutCmp//out_2ch_contour//model1_vs_model2.txt
+echo model0 vs model1: >> OutCmp//out_2ch_contour_model0_vs_model1.txt
+"tools//PCMCompare.exe" OutStreams//out_2ch_contour_ne40_24b_48k_model0.wav OutStreams//out_2ch_contour_ne40_24b_48k_model1.wav >> OutCmp//out_2ch_contour_model0_vs_model1.txt
+echo model1 vs model2: >> OutCmp//out_2ch_contour_model1_vs_model2.txt
+"tools//PCMCompare.exe" OutStreams//out_2ch_contour_ne40_24b_48k_model1.wav OutStreams//out_2ch_contour_ne40_24b_48k_model2.wav >> OutCmp//out_2ch_contour_model1_vs_model2.txt
 
 :2ch_lvl_amt_48k
 echo model0 vs model1: >> OutCmp//2ch_lvl_amt_48k//model0_vs_model1.txt
