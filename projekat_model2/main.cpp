@@ -129,14 +129,6 @@ DSPfract lfo(DSPaccum phase);
 
 void tremolo_procces(DSPfract* input, DSPfract* output)
 {
-	/*DSPaccum ph;
-	DSPaccum temp_phase;
-	DSPaccum temp_depth;
-	DSPfract* p_in = input;
-	DSPfract* p_out = output;
-	DSPfract temp_lfo;
-	DSPaccum outVal;
-	*/
 	DSPaccum ph;
 	DSPfract* p_in = input;
 	DSPfract* p_out = output;
@@ -159,10 +151,6 @@ void tremolo_procces(DSPfract* input, DSPfract* output)
 		temp_depth = tremolo_data.depth * temp_lfo;
 		*p_out = *p_in * (FRACT_NUM(1.0) - temp_depth);
 
-	/*	temp = tremolo_data.depth*lfo(ph);
-		outVal = (DSPaccum)*p_in *(ACCUM_NUM(1.0) - temp);
-		*p_out = (DSPfract)outVal;
-*/
 		// Update the carrier and LFO phases, keeping them in the range 0-1
 		temp_phase = tremolo_data.inverseSampleRate;
 		ph = ph + temp_phase;
@@ -248,9 +236,7 @@ DSPfract lfo(DSPaccum phase)
 void processing_foo()
 {
 	DSPfract* p_L = sampleBufferLeft;
-	DSPfract* p_Ls = sampleBufferLeftSide;
 	DSPfract* p_R = sampleBufferRight;
-	DSPfract* p_Rs = sampleBufferRightSide;
 	DSPaccum temp;
 
 	for (; p_L <= sampleBufferLeft + BLOCK_SIZE - 1; p_L++, p_R++)

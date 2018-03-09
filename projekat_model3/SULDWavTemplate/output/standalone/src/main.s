@@ -680,14 +680,14 @@ cline_232_0:			/* LN: 233 | CYCLE: 0 | RULES: () */
 	ymem[i1] = a0			# LN: 233 | 
 cline_233_0:			/* LN: 227 | CYCLE: 0 | RULES: () */ 
 init_latch_label_1:			/* LN: 234 | CYCLE: 0 | RULES: () */ 
-	i0 = i7 - (0x2)			# LN: 227 | 
-	i0 = xmem[i0]			# LN: 227 | 
-	i1 = i7 - (0x2)			# LN: 227 | 
-	i0 += 1			# LN: 227 | 
-	xmem[i1] = i0			# LN: 227 | 
 	i0 = i7 - (0x1)			# LN: 227 | 
 	i0 = xmem[i0]			# LN: 227 | 
 	i1 = i7 - (0x1)			# LN: 227 | 
+	i0 += 1			# LN: 227 | 
+	xmem[i1] = i0			# LN: 227 | 
+	i0 = i7 - (0x2)			# LN: 227 | 
+	i0 = xmem[i0]			# LN: 227 | 
+	i1 = i7 - (0x2)			# LN: 227 | 
 	i0 += 1			# LN: 227 | 
 	xmem[i1] = i0			# LN: 227 | 
 	jmp (for_1)			# LN: 227 | 

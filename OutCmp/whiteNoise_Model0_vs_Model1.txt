@@ -1,2 +1,0 @@
-model0 vs model1: 
-      No differences encountered!
