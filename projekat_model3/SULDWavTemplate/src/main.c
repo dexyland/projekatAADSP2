@@ -9,15 +9,10 @@
 #define SAMPLE_RATE 48000
 #define INVERSE_SAMPLE_RATE ACCUM_NUM(0.00002083333333333333333)
 
+////////////////////////////////////////////////////////////////
+// IO buffer
+////////////////////////////////////////////////////////////////
 __memY DSPfract sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
-
-////////////////////////////////////////////////////////////////
-// Buffer pointers [L R][Ls Rs]
-////////////////////////////////////////////////////////////////
-__memY DSPfract* sampleBufferLeft = sampleBuffer[0];
-__memY DSPfract* sampleBufferRight = sampleBuffer[1];
-__memY DSPfract* sampleBufferLeftSide = sampleBuffer[2];
-__memY DSPfract* sampleBufferRightSide = sampleBuffer[3];
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 // Input gain. Default -4dB.
@@ -116,6 +111,7 @@ void tremolo_procces(__memY fract* input, __memY fract* output)
 	DSPfract temp_lfo = FRACT_NUM(0.0);
 	DSPaccum temp_depth;
 	DSPaccum temp_phase;
+	DSPint j;
 
 	// Make a temporary copy of any state variables which need to be
 	// maintained between calls to processBlock(). Each channel needs to be processed identically
@@ -123,10 +119,8 @@ void tremolo_procces(__memY fract* input, __memY fract* output)
 	// the next channel.
 	ph = tremolo_data.lfoPhase;
 
-	for (; p_in <= input + BLOCK_SIZE - 1; ++p_in, ++p_out)
+	for (j = 0; j < BLOCK_SIZE; j++)
 	{
-		//const DSPfract in = (DSPfract)*p_in;
-
 		// Ring modulation is easy! Just multiply the waveform by a periodic carrier
 		temp_lfo = lfo(ph);
 		temp_depth = tremolo_data.depth * temp_lfo;
@@ -142,6 +136,9 @@ void tremolo_procces(__memY fract* input, __memY fract* output)
 
 		if (ph >= FRACT_NUM(1.0))
 			ph -= FRACT_NUM(1.0);
+
+		p_in++;
+		p_out++;
 	}
 	// Having made a local copy of the state variables for each channel, now transfer the result
 	// back to the main state variable so they will be preserved for the next call of processBlock()
@@ -220,24 +217,28 @@ DSPfract lfo(DSPaccum phase)
 /////////////////////////////////////////////////////////////////////////////////
 void processing_foo()
 {
-	__memY DSPfract* p_L = sampleBuffer[0];
-	__memY DSPfract* p_R = sampleBuffer[1];
+	__memY DSPfract* p_L = *sampleBuffer;
+	__memY DSPfract* p_R = *(sampleBuffer+1);
 	DSPaccum temp;
+	DSPint j;
 
-	for (; p_L <= sampleBufferLeft + BLOCK_SIZE - 1; p_L++, p_R++)
+	for (j = 0; j < BLOCK_SIZE; j++)
 	{
 		temp = *p_L * inputGain;
 		*p_L = temp;
 
 		temp = *p_R * inputGain;
 		*p_R = temp;
+
+		p_L++;
+		p_R++;
 	}
 
 	// Add tremolo effect on Ls and Rs channels
 	if (outputChannelNum == 4)
 	{
-		tremolo_procces(sampleBuffer[0], sampleBuffer[2]);
-		tremolo_procces(sampleBuffer[1], sampleBuffer[3]);
+		tremolo_procces(*sampleBuffer, *(sampleBuffer+2));
+		tremolo_procces(*(sampleBuffer+1), *(sampleBuffer+3));
 	}
 }
 
@@ -270,10 +271,12 @@ int main(int argc, char *argv[])
     int sampleRate;
     int iNumSamples;
     int i;
+    int j;
 
 	// Init channel buffers
 	for(i=0; i<MAX_NUM_CHANNEL; i++)
-		memset(&sampleBuffer[i],0,BLOCK_SIZE);
+		for(j=0;j<BLOCK_SIZE;j++)
+			sampleBuffer[i][j]=FRACT_NUM(0.0);
     
 	// Open input wav file
 	//-------------------------------------------------
