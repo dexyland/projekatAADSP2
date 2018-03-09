@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <CL_PROJECT>
-    <argv>C:\materija\ra94-2013\aadsp2\projekatAADSP2\TestStreams\titanic_horn.wav C:\materija\ra94-2013\aadsp2\projekatAADSP2\OutStreams\out_titanic_horn_model3.wav</argv>
+    <argv>J:\FAKS\4.godina\AADSP2\projekat\projekatAADSP2\TestStreams\Freq_sweep.wav J:\FAKS\4.godina\AADSP2\projekat\projekatAADSP2\OutStreams\Freq_sweep_model3.wav</argv>
     <FILE_IO_CFG block_type="Input" channels_per_line="2" delay="0" file_mode="PCM" index="0" justification="Left" sample_format="LittleEndian" sample_rate="48000" sample_size="32"/>
     <FILE_IO_CFG block_type="Output" channels_per_line="2" delay="0" file_mode="PCM" index="0" justification="Left" sample_format="LittleEndian" sample_rate="48000" sample_size="32"/>
     <MEMORY_CFG>
-        <ULD_FILE disk_path="C:/materija/ra94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/WavTemplate.uld"/>
+        <ULD_FILE disk_path="J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/WavTemplate.uld"/>
     </MEMORY_CFG>
     <PROFILE_CFG enable="on"/>
     <SCP_CFG load_delay="0"/>

@@ -1,17 +1,2 @@
-    Test error! Recorded file is 3443136 samples shorter than the reference file!
-    Max difference is 259 (9 bits, -48.06dB)
-    12864 samples compared 
-   -----------------------------------------------------------
-    Dif(bits) |    Samples    |   PERCENT  |   First dif
-   -----------------------------------------------------------
-         1    |        693    |    5.39%   |  0x0000004e   
-         2    |        107    |    0.83%   |  0x0000220c   
-         3    |        167    |    1.30%   |  0x000023d4   
-         4    |        290    |    2.25%   |  0x0000242c   
-         5    |        487    |    3.79%   |  0x000024ee   
-         6    |        963    |    7.49%   |  0x00002516   
-         7    |       1355    |   10.53%   |  0x00002586   
-         8    |        748    |    5.81%   |  0x00002786   
-         9    |          3    |    0.02%   |  0x0000526c   
-   -----------------------------------------------------------
-      Error   |       4813    |   37.41%              
+
+ERROR! Input file: OutStreams//out_titanic_horn_model2.wav - not found! 

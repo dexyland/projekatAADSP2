@@ -50,19 +50,19 @@ cd ..
 :cd ..
 :
 :: Execute Model 0, Model 1, Model 2 and Model 3 with Freq_sweep test stream
-:cd projekat_model0//Debug
-:"projekat_model0.exe" "..//..//TestStreams//Freq_sweep.wav" "..//..//OutStreams//Freq_sweep_model0.wav" "-4"
-:cd .. 
-:cd ..
-:cd projekat_model1//Debug
-:"projekat_model1.exe" "..//..//TestStreams//Freq_sweep.wav" "..//..//OutStreams//Freq_sweep_model1.wav" "-4"
-:cd ..
-:cd ..
-:cd projekat_model2//Debug
-:"projekat_model2.exe" "..//..//TestStreams//Freq_sweep.wav" "..//..//OutStreams//Freq_sweep_model2.wav" "-4"
-:cd ..
-:cd ..
-:
+cd projekat_model0//Debug
+"projekat_model0.exe" "..//..//TestStreams//Freq_sweep.wav" "..//..//OutStreams//Freq_sweep_model0.wav" "-4"
+cd .. 
+cd ..
+cd projekat_model1//Debug
+"projekat_model1.exe" "..//..//TestStreams//Freq_sweep.wav" "..//..//OutStreams//Freq_sweep_model1.wav" "-4"
+cd ..
+cd ..
+cd projekat_model2//Debug
+"projekat_model2.exe" "..//..//TestStreams//Freq_sweep.wav" "..//..//OutStreams//Freq_sweep_model2.wav" "-4"
+cd ..
+cd ..
+
 :: Execute Model 0, Model 1, Model 2 and Model 3 Ch_Numbers test stream
 :cd projekat_model0//Debug
 :"projekat_model0.exe" "..//..//TestStreams//Ch_Numbers.wav" "..//..//OutStreams//Ch_Numbers_model0.wav" "-4"
@@ -106,18 +106,18 @@ cd ..
 :cd ..
 
 : Execute Model 0, Model 1, Model 2 and Model 3 with titanic_horn test stream
-cd projekat_model0//Debug
-"projekat_model0.exe" "..//..//TestStreams//titanic_horn.wav" "..//..//OutStreams//out_titanic_horn_model0.wav" "-4"
-cd .. 
-cd ..
-cd projekat_model1//Debug
-"projekat_model1.exe" "..//..//TestStreams//titanic_horn.wav" "..//..//OutStreams//out_titanic_horn_model1.wav" "-4"
-cd ..
-cd ..
-cd projekat_model2//Debug
-"projekat_model2.exe" "..//..//TestStreams//titanic_horn.wav" "..//..//OutStreams//out_titanic_horn_model2.wav" "-4"
-cd ..
-cd ..
+:cd projekat_model0//Debug
+:"projekat_model0.exe" "..//..//TestStreams//titanic_horn.wav" "..//..//OutStreams//out_titanic_horn_model0.wav" "-4"
+:cd .. 
+:cd ..
+:cd projekat_model1//Debug
+:"projekat_model1.exe" "..//..//TestStreams//titanic_horn.wav" "..//..//OutStreams//out_titanic_horn_model1.wav" "-4"
+:cd ..
+:cd ..
+:cd projekat_model2//Debug
+:"projekat_model2.exe" "..//..//TestStreams//titanic_horn.wav" "..//..//OutStreams//out_titanic_horn_model2.wav" "-4"
+:cd ..
+:cd ..
 
 :: Execute Model 0, Model 1, Model 2 and Model 3 with Tone_L1k_R3k test stream
 :cd projekat_model0//Debug

@@ -9,7 +9,7 @@
 #define SAMPLE_RATE 48000
 #define INVERSE_SAMPLE_RATE ACCUM_NUM(0.00002083333333333333333)
 
-fract sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
+__memY DSPfract sampleBuffer[MAX_NUM_CHANNEL][BLOCK_SIZE];
 
 ////////////////////////////////////////////////////////////////
 // Buffer pointers [L R][Ls Rs]
@@ -22,12 +22,12 @@ __memY DSPfract* sampleBufferRightSide = sampleBuffer[3];
 ////////////////////////////////////////////////////////////////
 // Input gain. Default -4dB.
 ////////////////////////////////////////////////////////////////
-DSPfract inputGain;
+__memX DSPfract inputGain;
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 // Number of output channels. Default 4.
 ////////////////////////////////////////////////////////////////
-int outputChannelNum = 4;
+__memX DSPint outputChannelNum;
 ////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
 // Control state structure
@@ -74,6 +74,7 @@ void tremolo_init()
 {
 	// Set default values:
 	inputGain = FRACT_NUM(0.63);
+	outputChannelNum = 4;
 	tremolo_data.LFO_frequency = FRACT_NUM(1.0);
 	tremolo_data.depth = FRACT_NUM(1.0);
 	tremolo_data.waveform = kWaveformSquare;
@@ -219,8 +220,8 @@ DSPfract lfo(DSPaccum phase)
 /////////////////////////////////////////////////////////////////////////////////
 void processing_foo()
 {
-	__memY DSPfract* p_L = sampleBufferLeft;
-	__memY DSPfract* p_R = sampleBufferRight;
+	__memY DSPfract* p_L = sampleBuffer[0];
+	__memY DSPfract* p_R = sampleBuffer[1];
 	DSPaccum temp;
 
 	for (; p_L <= sampleBufferLeft + BLOCK_SIZE - 1; p_L++, p_R++)
@@ -235,8 +236,8 @@ void processing_foo()
 	// Add tremolo effect on Ls and Rs channels
 	if (outputChannelNum == 4)
 	{
-		tremolo_procces(sampleBufferLeft, sampleBufferLeftSide);
-		tremolo_procces(sampleBufferRight, sampleBufferRightSide);
+		tremolo_procces(sampleBuffer[0], sampleBuffer[2]);
+		tremolo_procces(sampleBuffer[1], sampleBuffer[3]);
 	}
 }
 

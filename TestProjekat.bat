@@ -17,6 +17,6 @@ cd ..
 
 
 :"..//tools//PCMCompare.exe" OutStreams//speech_out_21.wav OutStreams//speech_out_31.wav 2> OutCmp//speech_Model2_vs_Model3.txt
-"tools//PCMCompare.exe" OutStreams//out_titanic_horn_model2.wav OutStreams//out_titanic_horn_model3.wav 2> OutCmp//titanic_Model2_vs_Model3.txt
+"tools//PCMCompare.exe" OutStreams//Freq_sweep_model2.wav OutStreams//Freq_sweep_model3.wav 2> OutCmp//Freq_sweep_Model2_vs_Model3.txt
 
 pause
