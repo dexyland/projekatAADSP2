@@ -15,6 +15,7 @@
 #include <string.h>
 #include <math.h>
 #include "WAVheader.h"
+#include "table.h"
 
 /////////////////////////////////////////////////////////////////////////////////
 // Constant definitions
@@ -24,6 +25,7 @@
 #define SAMPLE_RATE 48000
 #define PI 3.14159265358979323846
 #define INVERSE_SAMPLE_RATE 0.00002083333333333333333
+#define MAX_LOOKUP_INDEX 511
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -117,7 +119,13 @@ void tremolo_procces(double* input, double* output, tremolo_struct_t* data, int 
 		const float in = input[i];
 
 		// Ring modulation is easy! Just multiply the waveform by a periodic carrier
-		output[i] = in * (1.0f - data->depth*lfo(ph, data->waveform));
+		int index = round(ph * 512.0);
+
+		if (index > MAX_LOOKUP_INDEX)
+			index = MAX_LOOKUP_INDEX;
+
+		output[i] = in * (1.0f - p_sine_table[index]);
+		//output[i] = in * (1.0f - data->depth*lfo(ph, data->waveform));
 
 		// Update the carrier and LFO phases, keeping them in the range 0-1
 		ph += data->LFO_frequency*data->inverseSampleRate;
@@ -237,7 +245,8 @@ int main(int argc, char* argv[])
 
 	// Init channel buffers
 	for (int i = 0; i<MAX_NUM_CHANNEL; i++)
-		memset(&sampleBuffer[i], 0, BLOCK_SIZE);
+		for (int j = 0; j<BLOCK_SIZE; j++)
+			sampleBuffer[i][j] = 1;
 
 	// check for input arguments (input gain and mode)
 	if (argc >= 4)
@@ -298,7 +307,7 @@ int main(int argc, char* argv[])
 		// exact file length should be handled correctly...
 		for (int i = 0; i<iNumSamples / BLOCK_SIZE; i++)
 		{
-			for (int j = 0; j<BLOCK_SIZE; j++)
+			/*for (int j = 0; j<BLOCK_SIZE; j++)
 			{
 				for (int k = 0; k<inputWAVhdr.fmt.NumChannels; k++)
 				{
@@ -312,7 +321,7 @@ int main(int argc, char* argv[])
 						sampleBuffer[1][j] = sample / SAMPLE_SCALE;
 					}
 				}
-			}
+			}*/
 
 			processing_foo(outputChannelNum, &tremolo_data);
 
