@@ -3,8 +3,10 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="WAVheader.cpp" />
+    <ClCompile Include="table.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WAVheader.h" />
+    <ClInclude Include="table.h" />
   </ItemGroup>
 </Project>

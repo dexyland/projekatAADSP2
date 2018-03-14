@@ -246,7 +246,7 @@ int main(int argc, char* argv[])
 	// Init channel buffers
 	for (int i = 0; i<MAX_NUM_CHANNEL; i++)
 		for (int j = 0; j<BLOCK_SIZE; j++)
-			sampleBuffer[i][j] = 1;
+			sampleBuffer[i][j] = 0;
 
 	// check for input arguments (input gain and mode)
 	if (argc >= 4)
@@ -307,7 +307,7 @@ int main(int argc, char* argv[])
 		// exact file length should be handled correctly...
 		for (int i = 0; i<iNumSamples / BLOCK_SIZE; i++)
 		{
-			/*for (int j = 0; j<BLOCK_SIZE; j++)
+			for (int j = 0; j<BLOCK_SIZE; j++)
 			{
 				for (int k = 0; k<inputWAVhdr.fmt.NumChannels; k++)
 				{
@@ -321,7 +321,7 @@ int main(int argc, char* argv[])
 						sampleBuffer[1][j] = sample / SAMPLE_SCALE;
 					}
 				}
-			}*/
+			}
 
 			processing_foo(outputChannelNum, &tremolo_data);
 

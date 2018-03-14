@@ -16,8 +16,9 @@
 //#include <math.h>
 #include "stdfix_emu.h"
 #include "fixed_point_math.h"
-#include "common.h"
 #include "WAVheader.h"
+#include "table.h"
+#include "common.h"
 
 /////////////////////////////////////////////////////////////////////////////////
 // Constant definitions
@@ -28,6 +29,7 @@
 #define PI 3.14159265358979323846
 #define OUTPUT_CHANNELS_NUM 4
 #define INVERSE_SAMPLE_RATE  0.00002083333333333333333
+#define MAX_LOOKUP_INDEX 511
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -147,9 +149,17 @@ void tremolo_procces(DSPfract* input, DSPfract* output)
 		//const DSPfract in = (DSPfract)*p_in;
 
 		// Ring modulation is easy! Just multiply the waveform by a periodic carrier
-		temp_lfo = lfo(ph);
-		temp_depth = tremolo_data.depth * temp_lfo;
-		*p_out = *p_in * (FRACT_NUM(1.0) - temp_depth);
+		//temp_lfo = lfo(ph);
+		//temp_depth = tremolo_data.depth * temp_lfo;
+		//*p_out = *p_in * (FRACT_NUM(1.0) - temp_depth);
+
+
+		DSPint index = ph * ACCUM_NUM(512.0);
+
+		if (index > MAX_LOOKUP_INDEX)
+			index = MAX_LOOKUP_INDEX;
+
+		*p_out = *p_in * (FRACT_NUM(1.0) - p_sine_table[index]);
 
 		// Update the carrier and LFO phases, keeping them in the range 0-1
 		temp_phase = tremolo_data.inverseSampleRate;

@@ -15,6 +15,7 @@
 #include <string.h>
 #include <math.h>
 #include "WAVheader.h"
+#include "table.h"
 
 /////////////////////////////////////////////////////////////////////////////////
 // Constant definitions
@@ -24,6 +25,7 @@
 #define SAMPLE_RATE 48000
 #define PI 3.14159265358979323846
 #define INVERSE_SAMPLE_RATE 0.00002083333333333333333
+#define MAX_LOOKUP_INDEX 511
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -140,7 +142,13 @@ void tremolo_procces(double* input, double* output)
 		const float in = (float)*p_in;
 
 		// Ring modulation is easy! Just multiply the waveform by a periodic carrier
-		*p_out = in * (1.0f - tremolo_data.depth*lfo(ph));
+		int index = round(ph * 512.0);
+
+		if (index > MAX_LOOKUP_INDEX)
+			index = MAX_LOOKUP_INDEX;
+
+		*p_out = in * (1.0f - p_sine_table[index]);
+		//*p_out = in * (1.0f - tremolo_data.depth*lfo(ph));
 
 		// Update the carrier and LFO phases, keeping them in the range 0-1
 		ph += tremolo_data.inverseSampleRate;

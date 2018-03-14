@@ -12,9 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="table.cpp" />
     <ClCompile Include="WAVheader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="table.h" />
     <ClInclude Include="WAVheader.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
