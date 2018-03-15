@@ -352,7 +352,7 @@ __memX tremolo_struct_t tremolo_data;
 void tremolo_init()
 {
 	// Set default values:
-	inputGain = FRACT_NUM(0.63);
+	inputGain = FRACT_NUM(0.6309573444801932494343);
 	outputChannelNum = 4;
 	tremolo_data.LFO_frequency = FRACT_NUM(1.0);
 	tremolo_data.depth = FRACT_NUM(1.0);

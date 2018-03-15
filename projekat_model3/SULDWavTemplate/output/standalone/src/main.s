@@ -44,7 +44,7 @@ __extractedConst_2_2
 	.dw  (0xa3d70a4)
 	.xdata_ovly
 __extractedConst_3_1
-	.dw  (0x50a3d70a)
+	.dw  (0x50c335d4)
 	.xdata_ovly
 _inputGain
 	.bss (0x1)

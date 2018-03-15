@@ -391,6 +391,7 @@ void tremolo_init()
 	tremolo_data.lfoPhase = FRACT_NUM(0.0);
 	tremolo_data.inverseSampleRate = ACCUM_NUM(INVERSE_SAMPLE_RATE);
 	tremolo_data.index = 0;
+	inputGain = FRACT_NUM(0.6309573444801932494343);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -584,10 +585,12 @@ DSPint main(DSPint argc, char* argv[])
 			sampleBuffer[i][j] = FRACT_NUM(0.0);
 
 	// check for input arguments (input gain and mode)
-	if (argc >= 4)
+	/*if (argc >= 4)
 	{
 		inputGain = pow(10, atoi(argv[3]) / 20.0);
-	}
+	}*/
+
+	printf("input gain: %f\n", inputGain);
 
 	if (argc == 5)
 	{
