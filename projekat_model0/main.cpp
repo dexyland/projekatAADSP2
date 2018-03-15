@@ -24,7 +24,7 @@
 #define MAX_NUM_CHANNEL 8
 #define SAMPLE_RATE 48000
 #define PI 3.14159265358979323846
-#define INVERSE_SAMPLE_RATE 0.00002083333333333333333
+#define INVERSE_SAMPLE_RATE 0.000030517578125
 #define MAX_LOOKUP_INDEX 511
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -60,6 +60,7 @@ typedef struct {
 	wave_forms_t   waveform;		// What shape should be used for the LFO
 	double lfoPhase;
 	double inverseSampleRate;
+	int index;
 } tremolo_struct_t;
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -84,6 +85,7 @@ void tremolo_init(tremolo_struct_t * tremolo_data)
 	tremolo_data->waveform = kWaveformSquare;
 	tremolo_data->lfoPhase = 0.0;
 	tremolo_data->inverseSampleRate = INVERSE_SAMPLE_RATE;
+	tremolo_data->index = 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -106,36 +108,41 @@ double lfo(double phase, wave_forms_t waveform);
 
 void tremolo_procces(double* input, double* output, tremolo_struct_t* data, int numSamples)
 {
-	double ph;
+	//double ph;
+	int index;
 
 	// Make a temporary copy of any state variables which need to be
 	// maintained between calls to processBlock(). Each channel needs to be processed identically
 	// which means that the activity of processing one channel can't affect the state variable for
 	// the next channel.
-	ph = data->lfoPhase;
+	//ph = data->lfoPhase;
+	index = data->index;
 
 	for (int i = 0; i < numSamples; ++i)
 	{
-		const float in = input[i];
+		const double in = input[i];
 
 		// Ring modulation is easy! Just multiply the waveform by a periodic carrier
-		int index = round(ph * 512.0);
+		//int index = round(ph * 512.0);
 
-		if (index > MAX_LOOKUP_INDEX)
-			index = MAX_LOOKUP_INDEX;
 
 		output[i] = in * (1.0f - p_sine_table[index]);
 		//output[i] = in * (1.0f - data->depth*lfo(ph, data->waveform));
 
 		// Update the carrier and LFO phases, keeping them in the range 0-1
-		ph += data->LFO_frequency*data->inverseSampleRate;
+		//ph += data->LFO_frequency*data->inverseSampleRate;
+		index++;
 
-		if (ph >= 1.0)
-			ph -= 1.0;
+		if (index > MAX_LOOKUP_INDEX)
+			index = 0;
+
+		//if (ph >= 1.0)
+		//	ph -= 1.0;
 	}
 	// Having made a local copy of the state variables for each channel, now transfer the result
 	// back to the main state variable so they will be preserved for the next call of processBlock()
-	data->lfoPhase = ph;
+	//data->lfoPhase = ph;
+	data->index = index;
 }
 
 double lfo(double phase, wave_forms_t waveform)

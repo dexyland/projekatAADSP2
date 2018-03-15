@@ -83,7 +83,7 @@ import clide.boardconfig.xml.simulator.XmlScpFile;
 	//
 	// argv (optional)
 	//
-	'argv':                         "C:\\materija\\ra94-2013\\projekatAADSP2\\TestStreams\\Freq_sweep.wav C:\\materija\\ra94-2013\\projekatAADSP2\\OutStreams\\Freq_sweep_model3.wav",
+	'argv':                         "C:\\materija\\ra94-2013\\projekatAADSP2\\TestStreams\\titanic_horn.wav C:\\materija\\ra94-2013\\projekatAADSP2\\OutStreams\\titanic_horn_model3.wav",
 	//'argv':							"J:\\FAKS\\4.godina\\AADSP2\\projekat\\projekatAADSP2\\TestStreams\\Freq_sweep.wav J:\\FAKS\\4.godina\\AADSP2\\projekat\\projekatAADSP2\\OutStreams\\Freq_sweep_model3.wav",
 	//
 	// scp files (optional)

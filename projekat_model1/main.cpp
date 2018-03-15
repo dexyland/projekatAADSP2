@@ -24,7 +24,7 @@
 #define MAX_NUM_CHANNEL 8
 #define SAMPLE_RATE 48000
 #define PI 3.14159265358979323846
-#define INVERSE_SAMPLE_RATE 0.00002083333333333333333
+#define INVERSE_SAMPLE_RATE 0.000030517578125
 #define MAX_LOOKUP_INDEX 511
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -75,6 +75,7 @@ typedef struct {
 	wave_forms_t   waveform;		// What shape should be used for the LFO
 	double lfoPhase;
 	double inverseSampleRate;
+	int index;
 } tremolo_struct_t;
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -105,6 +106,7 @@ void tremolo_init()
 	tremolo_data.waveform = kWaveformSquare;
 	tremolo_data.lfoPhase = 0.0;
 	tremolo_data.inverseSampleRate = INVERSE_SAMPLE_RATE;
+	tremolo_data.index = 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -130,28 +132,31 @@ void tremolo_procces(double* input, double* output)
 	double ph;
 	double* p_in = input;
 	double* p_out = output;
+	int index;
 
 	// Make a temporary copy of any state variables which need to be
 	// maintained between calls to processBlock(). Each channel needs to be processed identically
 	// which means that the activity of processing one channel can't affect the state variable for
 	// the next channel.
 	ph = tremolo_data.lfoPhase;
+	index = tremolo_data.index;
 
 	for (; p_in <= input + BLOCK_SIZE - 1; ++p_in, ++p_out)
 	{
 		const float in = (float)*p_in;
 
 		// Ring modulation is easy! Just multiply the waveform by a periodic carrier
-		int index = round(ph * 512.0);
-
-		if (index > MAX_LOOKUP_INDEX)
-			index = MAX_LOOKUP_INDEX;
+		//int index = round(ph * 512.0);
 
 		*p_out = in * (1.0f - p_sine_table[index]);
 		//*p_out = in * (1.0f - tremolo_data.depth*lfo(ph));
 
 		// Update the carrier and LFO phases, keeping them in the range 0-1
 		ph += tremolo_data.inverseSampleRate;
+		index++;
+
+		if (index > MAX_LOOKUP_INDEX)
+			index = 0;
 
 		if (ph >= 1.0)
 			ph -= 1.0;
@@ -159,6 +164,7 @@ void tremolo_procces(double* input, double* output)
 	// Having made a local copy of the state variables for each channel, now transfer the result
 	// back to the main state variable so they will be preserved for the next call of processBlock()
 	tremolo_data.lfoPhase = ph;
+	tremolo_data.index = index;
 }
 
 double lfo(double phase)
@@ -277,7 +283,8 @@ int main(int argc, char* argv[])
 
 	// Init channel buffers
 	for (int i = 0; i<MAX_NUM_CHANNEL; i++)
-		memset(&sampleBuffer[i], 0, BLOCK_SIZE);
+		for (int j = 0; j<BLOCK_SIZE; j++)
+			sampleBuffer[i][j] = 0;
 
 	// check for input arguments (input gain and mode)
 	if (argc >= 4)

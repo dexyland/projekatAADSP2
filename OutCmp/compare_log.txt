@@ -4,49 +4,49 @@
       No differences encountered!
   -model1 vs model2: 
     Max difference is 1 (1 bits, -144.49dB)
-# 
+. 
 #2ch_lvl_amt_48k test: 
   -model0 vs model1: 
       No differences encountered!
   -model1 vs model2: 
     Max difference is 1 (1 bits, -144.49dB)
-# 
+. 
 #Amp_sweep test: 
   -model0 vs model1: 
       No differences encountered!
   -model1 vs model2: 
     Max difference is 1 (1 bits, -144.49dB)
-# 
+. 
 #Freq_sweep test: 
   -model0 vs model1: 
       No differences encountered!
   -model1 vs model2: 
     Max difference is 1 (1 bits, -144.49dB)
-# 
+. 
 #Ch_Numbers test: 
   -model0 vs model1: 
       No differences encountered!
   -model1 vs model2: 
-      No differences encountered!
-# 
+    Max difference is 1 (1 bits, -144.49dB)
+. 
 #Titanic_horn test: 
   -model0 vs model1: 
       No differences encountered!
   -model1 vs model2: 
     Max difference is 1 (1 bits, -96.33dB)
-#
+. 
 #WhiteNoise test: 
   -model0 vs model1: 
       No differences encountered!
   -model1 vs model2: 
     Max difference is 1 (1 bits, -144.49dB)
-# 
+. 
 #Tone_L1k_R3k test: 
   -model0 vs model1: 
       No differences encountered!
   -model1 vs model2: 
     Max difference is 1 (1 bits, -144.49dB)
-# 
+. 
 #Multi_Tone test: 
   -model0 vs model1: 
       No differences encountered!
