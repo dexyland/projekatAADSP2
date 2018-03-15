@@ -1,60 +1,8 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (multitapEcho_model0.vcxproj, projekat_model0.vcxproj, projekat_model1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  table.cpp
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\common.h(19): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\common.h(19): error C2146: syntax error: missing ';' before identifier 'DSPfract'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\common.h(20): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\common.h(20): error C2146: syntax error: missing ';' before identifier 'DSPaccum'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\stdfix_emu.h(122): error C2371: 'fract': redefinition; different basic types
-  c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\common.h(19): note: see declaration of 'fract'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\stdfix_emu.h(124): error C2371: 'long_accum': redefinition; different basic types
-  c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\common.h(20): note: see declaration of 'long_accum'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(5): error C2086: 'int DSPfract': redefinition
-  c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\common.h(19): note: see declaration of 'DSPfract'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(5): error C2146: syntax error: missing ';' before identifier 'triangle_table'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(6): error C2143: syntax error: missing ';' before '{'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(6): error C2447: '{': missing function header (old-style formal list?)
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(73): error C2143: syntax error: missing ';' before '*'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(73): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(73): error C2086: 'int DSPfract': redefinition
-  c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\common.h(19): note: see declaration of 'DSPfract'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(73): error C2065: 'triangle_table': undeclared identifier
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(75): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(75): error C2086: 'int DSPfract': redefinition
-  c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\common.h(19): note: see declaration of 'DSPfract'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(75): error C2146: syntax error: missing ';' before identifier 'square_table'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(76): error C2143: syntax error: missing ';' before '{'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(76): error C2447: '{': missing function header (old-style formal list?)
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(143): error C2143: syntax error: missing ';' before '*'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(143): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(143): error C2086: 'int DSPfract': redefinition
-  c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\common.h(19): note: see declaration of 'DSPfract'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(143): error C2065: 'square_table': undeclared identifier
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(145): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(145): error C2086: 'int DSPfract': redefinition
-  c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\common.h(19): note: see declaration of 'DSPfract'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(145): error C2146: syntax error: missing ';' before identifier 'squareSlopedEdges_table'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(146): error C2143: syntax error: missing ';' before '{'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(146): error C2447: '{': missing function header (old-style formal list?)
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(213): error C2143: syntax error: missing ';' before '*'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(213): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(213): error C2086: 'int DSPfract': redefinition
-  c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\common.h(19): note: see declaration of 'DSPfract'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(213): error C2065: 'squareSlopedEdges_table': undeclared identifier
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(215): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(215): error C2086: 'int DSPfract': redefinition
-  c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\common.h(19): note: see declaration of 'DSPfract'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(215): error C2146: syntax error: missing ';' before identifier 'sine_table'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(216): error C2143: syntax error: missing ';' before '{'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(216): error C2447: '{': missing function header (old-style formal list?)
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(283): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(283): error C2086: 'int DSPfract': redefinition
-  c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\common.h(19): note: see declaration of 'DSPfract'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\table.cpp(283): error C2146: syntax error: missing ';' before identifier 'p_sine_table'
   main.cpp
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\main.cpp(162): error C2065: 'p_sine_table': undeclared identifier
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\main.cpp(313): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+j:\faks\4.godina\aadsp2\projekat\projekataadsp2\projekat_model2\main.cpp(593): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model2\main.cpp(315): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+j:\faks\4.godina\aadsp2\projekat\projekataadsp2\projekat_model2\main.cpp(595): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
-  Generating Code...
+j:\faks\4.godina\aadsp2\projekat\projekataadsp2\projekat_model2\main.cpp(507): warning C4715: 'lfo': not all control paths return a value
+  multitapEcho_model0.vcxproj -> J:\FAKS\4.godina\AADSP2\projekat\projekatAADSP2\projekat_model2\Debug\projekat_model2.exe

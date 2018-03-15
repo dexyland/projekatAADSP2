@@ -1,12 +1,2 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (multitapEcho_model0.vcxproj, projekat_model0.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  main.cpp
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(145): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(213): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(363): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(298): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
-c:\materija\ra94-2013\aadsp2\projekataadsp2\projekat_model1\main.cpp(300): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
-  LINK : C:\materija\RA94-2013\aadsp2\projekatAADSP2\projekat_model1\Debug\projekat_model1.exe not found or not built by the last incremental link; performing full link
-  multitapEcho_model0.vcxproj -> C:\materija\RA94-2013\aadsp2\projekatAADSP2\projekat_model1\Debug\projekat_model1.exe
-  multitapEcho_model0.vcxproj -> C:\materija\RA94-2013\aadsp2\projekatAADSP2\projekat_model1\Debug\projekat_model1.pdb (Full PDB)
+  multitapEcho_model0.vcxproj -> J:\FAKS\4.godina\AADSP2\projekat\projekatAADSP2\projekat_model1\Debug\projekat_model1.exe
