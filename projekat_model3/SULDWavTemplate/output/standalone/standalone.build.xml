@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<project basedir="C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate" name="WavTemplate">
+<project basedir="J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate" name="WavTemplate">
 	<target description="Compiling .c files..." name="ccc">
-		<delete file="C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.O"/>
-		<delete file="C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.s"/>
+		<delete file="J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.O"/>
+		<delete file="J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.s"/>
 		<exec executable="C:/CirrusDSP/bin/ccc2" failonerror="true" resultProperty="cccResult0">
 			<env key="PATH" path="C:/CirrusDSP/bin/:${env.PATH}"/>
-			<arg value="C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c"/>
+			<arg value="J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c"/>
 			<arg value="-S"/>
 			<arg value="-ruf"/>
 			<arg value="-fcse"/>
 			<arg value="-fprc"/>
 			<arg value="-fcompact"/>
 			<arg value="-funsafe-loop-optimizations"/>
-			<arg value="-g"/>
 			<arg value="-edi"/>
 			<arg value="-emit-hints"/>
 			<arg value="-ira"/>
@@ -31,8 +30,8 @@
 			<arg value="-D_MUI_VERSION_=020000"/>
 			<arg value="-IC:/CirrusDSP/include/"/>
 			<arg value="-IC:/CirrusDSP/include/dsplib/"/>
-			<arg value="-IC:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/inc/"/>
-			<arg value="-oC:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.s"/>
+			<arg value="-IJ:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/inc/"/>
+			<arg value="-oJ:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.s"/>
 			<arg value="-D_LOCAL_SRC_PATH_=src/"/>
 			<arg value="-D_LOCAL_INC_PATH_=inc/"/>
 			<arg value="-D_ROUTER_INC_PATH_=rom_inc/"/>
@@ -49,9 +48,9 @@
 		<fail message="Please check compiler errors."/>
 	</target>
 	<target description="Assembling .a and .s files..." name="casm">
-		<delete file="C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.O"/>
+		<delete file="J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.O"/>
 		<exec executable="C:/CirrusDSP/bin/casm" failonerror="true" resultProperty="casmResult0">
-			<arg value="C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.s"/>
+			<arg value="J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.s"/>
 			<arg value="--debug"/>
 			<arg value="-c"/>
 			<arg value="-s"/>
@@ -67,9 +66,9 @@
 			<arg value="-D_MUI_VERSION_=020000"/>
 			<arg value="-IC:/CirrusDSP/include/"/>
 			<arg value="-IC:/CirrusDSP/include/dsplib/"/>
-			<arg value="-IC:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/inc/"/>
-			<arg value="-lC:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.lst"/>
-			<arg value="-oC:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.O"/>
+			<arg value="-IJ:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/inc/"/>
+			<arg value="-lJ:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.lst"/>
+			<arg value="-oJ:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.O"/>
 			<arg value="-iC:/CirrusDSP/crystal32/common/inc/base.h"/>
 			<arg value="-D_LOCAL_SRC_PATH_=src/"/>
 			<arg value="-D_LOCAL_INC_PATH_=inc/"/>
@@ -88,9 +87,9 @@
 	</target>
 	<target description="Linking files..." name="clink">
 		<exec executable="C:/CirrusDSP/bin/clink" failonerror="true">
-			<arg value="-oC:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/WavTemplate.img"/>
+			<arg value="-oJ:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/WavTemplate.img"/>
 			<arg value="-fC:/CirrusDSP/crystal32/memory_maps/v00.mem.xml"/>
-			<arg value="C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.O"/>
+			<arg value="J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.O"/>
 			<arg value="--output_type=RAM"/>
 			<arg value="--overlay_type=standalone"/>
 			<arg value="-lC:/CirrusDSP/lib/"/>
@@ -101,8 +100,8 @@
 	<target depends="clink" description="Creating .uld file..." name="lnkuld">
 		<exec executable="C:/CirrusDSP/bin/lnkuld" failonerror="true">
 			<arg value="-ja"/>
-			<arg value="C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/WavTemplate.img"/>
-			<arg value="C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/WavTemplate.uld"/>
+			<arg value="J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/WavTemplate.img"/>
+			<arg value="J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/WavTemplate.uld"/>
 		</exec>
 	</target>
 </project>

@@ -2,17 +2,15 @@
   Project: WavTemplate
 ===========================================
 Compiling .c files...
-   [delete] Deleting: C:\materija\RA94-2013\aadsp2\projekatAADSP2\projekat_model3\SULDWavTemplate\output\standalone\src\main.O
-   [delete] Deleting: C:\materija\RA94-2013\aadsp2\projekatAADSP2\projekat_model3\SULDWavTemplate\output\standalone\src\main.s
-C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c
-C:/CirrusDSP/bin/ccc2 C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c
+   [delete] Deleting: J:\FAKS\4.godina\AADSP2\projekat\projekatAADSP2\projekat_model3\SULDWavTemplate\output\standalone\src\main.s
+J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c
+C:/CirrusDSP/bin/ccc2 J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c
  -S
  -ruf
  -fcse
  -fprc
  -fcompact
  -funsafe-loop-optimizations
- -g
  -edi
  -emit-hints
  -ira
@@ -31,8 +29,8 @@ C:/CirrusDSP/bin/ccc2 C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model
  -D_MUI_VERSION_=020000
  -IC:/CirrusDSP/include/
  -IC:/CirrusDSP/include/dsplib/
- -IC:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/inc/
- -oC:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.s
+ -IJ:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/inc/
+ -oJ:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.s
  -D_LOCAL_SRC_PATH_=src/
  -D_LOCAL_INC_PATH_=inc/
  -D_ROUTER_INC_PATH_=rom_inc/
@@ -48,77 +46,34 @@ C:/CirrusDSP/bin/ccc2 C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model
      [exec]   typedef unsigned int size_t;
      [exec]                        ^
      [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 395: warning #553: variable "temp_lfo" was set but never used
-     [exec]   	DSPfract temp_lfo = FRACT_NUM(0.0);
+     [exec] "J:/FAKS/4.godina/AADSP2/projekat/projek"J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 518: warning: The following ratAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 509: warning #179: variable "temp" was declared but never referenced
+     [exec] egister names are detected in the asm string but are not declared in the clobber list: x0 x1 y0 
+     [exec] "J:/FAKS/4.godina/AADSP2/pro
+     [exec]   	DSPaccum temp;
      [exec]   	         ^
      [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 396: warning #179: variable "temp_depth" was declared but never referenced
-     [exec]   	DSPaccum temp_depth;
-     [exec]   	         ^
+     [exec] jekat/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 561: warning #4007: Pointer to unspecified memory zone.
      [exec] 
-     [exec] WARNING: '-unsafe-loop-optimization' is ignored when '-g' option is used!
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 547: warning #4007: Pointer to unspecified memory zone.
+     [exec] "J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 563: warning #4007: Pointer to unspecified memory zone.
      [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 549: warning #4007: Pointer to unspecified memory zone.
+     [exec] "J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 564: warning #4007: Pointer to unspecified memory zone.
      [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 550: warning #4007: Pointer to unspecified memory zone.
+     [exec] "J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 412: info: SRS is used at this line.
      [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 612: info: Hardware loop is not emitted due to: 
-     [exec] Upper bound and initial loop index value are not constant.
-     [exec] Make them constant or try using -funsafe-loop-optimizations option.
+     [exec] "J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 580: info: SRS is used at this line.
      [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 623: info: Hardware loop is not emitted due to: 
-     [exec] Upper bound and initial loop index value are not constant.
-     [exec] Make them constant or try using -funsafe-loop-optimizations option.
+     [exec] "J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 620: info: Call to runtime function __div. Look at the separate document for information how to avoid this call.
      [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 608: info: Hardware loop is not emitted due to: 
-     [exec] Upper bound and initial loop index value are not constant.
-     [exec] Make them constant or try using -funsafe-loop-optimizations option.
+     [exec] "J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 630: info: SRS is used at this line.
      [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 441: info: SRS is used at this line.
+     [exec] "J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 640: info: SRS is used at this line.
      [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 445: info: SRS is used at this line.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 449: info: SRS is used at this line.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 471: info: Call to runtime function __mul_sat_laccum. Look at the separate document for information how to avoid this call.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 471: info: SRS is used at this line.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 479: info: Call to runtime function __mul_sat_laccum. Look at the separate document for information how to avoid this call.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 479: info: SRS is used at this line.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 393: info: SRS is used at this line.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 394: info: SRS is used at this line.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 412: info: SRS is used at this line.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 431: info: SRS is used at this line.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 507: info: SRS is used at this line.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 508: info: SRS is used at this line.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 515: info: SRS is used at this line.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 518: info: SRS is used at this line.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 566: info: SRS is used at this line.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 608: info: Call to runtime function __div. Look at the separate document for information how to avoid this call.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 615: info: SRS is used at this line.
-     [exec] 
-     [exec] "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/src/main.c", line 625: info: SRS is used at this line.
-     [exec] 
-     [exec] FRONT END TIME: 1 seconds
-     [exec] BACK  END TIME: 1 seconds
+     [exec] FRONT END TIME: 3 seconds
+     [exec] BACK  END TIME: 0 seconds
      [exec] 
 Assembling .a and .s files...
-C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.s
-C:/CirrusDSP/bin/casm C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.s
+J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.s
+C:/CirrusDSP/bin/casm J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.s
  --debug
  -c
  -s
@@ -134,70 +89,19 @@ C:/CirrusDSP/bin/casm C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model
  -D_MUI_VERSION_=020000
  -IC:/CirrusDSP/include/
  -IC:/CirrusDSP/include/dsplib/
- -IC:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/inc/
- -lC:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.lst
- -oC:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.O
+ -IJ:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/inc/
+ -lJ:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.lst
+ -oJ:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.O
  -iC:/CirrusDSP/crystal32/common/inc/base.h
  -D_LOCAL_SRC_PATH_=src/
  -D_LOCAL_INC_PATH_=inc/
  -D_ROUTER_INC_PATH_=rom_inc/
-Linking files...
-C:/CirrusDSP/bin/clink
- -oC:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/WavTemplate.img
- -fC:/CirrusDSP/crystal32/memory_maps/v00.mem.xml
- --output_type=RAM
- --overlay_type=standalone
- -lC:/CirrusDSP/lib/
- -lC:/CirrusDSP/lib/dsplib
- -lC:/CirrusDSP/lib/dsplib/crystal32/
-C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.O
-     [exec] Warning #507: Unknown class: Y_OS_CC_GLOBALS
-     [exec]             for the segment: CC_HEAPSTEAL_VALUES
-     [exec]             from the module: C:\CirrusDSP\lib\dsplib\crystal32\cl_heapsteal.O
-     [exec] DWARF WARNING: Could not find symbol "_tremolo_procces_temp_depth" in object file "C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.O".
-     [exec] Debug information for the symbol will be missing.
-     [exec] Try passing -s option to casm.
-     [exec] 
-     [exec] List of linked library's modules:
-     [exec] C:\CirrusDSP\lib\crt0.o
-     [exec] C:\CirrusDSP\lib\div.o
-     [exec] C:\CirrusDSP\lib\exit.o
-     [exec] C:\CirrusDSP\lib\mul_sat_laccum.o
-     [exec] C:\CirrusDSP\lib\mul_sat_ulaccum.o
-     [exec] C:\CirrusDSP\lib\simulator_stack.o
-     [exec] C:\CirrusDSP\lib\strcpy_x2x.o
-     [exec] C:\CirrusDSP\lib\udiv.o
-     [exec] C:\CirrusDSP\lib\dsplib\crystal32\cl_wavread_bits_per_sample.o
-     [exec] C:\CirrusDSP\lib\dsplib\crystal32\cl_wavread_close.o
-     [exec] C:\CirrusDSP\lib\dsplib\crystal32\cl_wavread_frame_rate.o
-     [exec] C:\CirrusDSP\lib\dsplib\crystal32\cl_wavread_getnchannels.o
-     [exec] C:\CirrusDSP\lib\dsplib\crystal32\cl_wavread_number_of_frames.o
-     [exec] C:\CirrusDSP\lib\dsplib\crystal32\cl_wavread_open.o
-     [exec] C:\CirrusDSP\lib\dsplib\crystal32\cl_wavread_recvsample.o
-     [exec] C:\CirrusDSP\lib\dsplib\crystal32\cl_wavwrite_close.o
-     [exec] C:\CirrusDSP\lib\dsplib\crystal32\cl_wavwrite_open.o
-     [exec] C:\CirrusDSP\lib\dsplib\crystal32\cl_wavwrite_sendsample.o
-     [exec] C:\CirrusDSP\lib\dsplib\crystal32\prin
-     [exec] tf.o
-Creating .uld file...
-C:/CirrusDSP/bin/lnkuld
- -ja
- C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/WavTemplate.img
- C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/WavTemplate.uld
-     [exec] 
-     [exec] Reading file: C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/WavTemplate.img ...
-     [exec] 	Processed 1284 line(s).
-     [exec] 
-     [exec] Writing output to file: C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTempla
-     [exec] te/output/standalone/WavTemplate.uld ...
-     [exec] 
-     [exec] Done!
-     [exec] 
-     [exec] Writing output to file: C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/WavTemplate.uldb ...
-     [exec] 
-     [exec] Done!
-     [exec] 
-     [exec] Writing output to file: C:/materija/RA94-2013/aadsp2/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/WavTemplate.uldc ...
+     [exec] Error #142: J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.s [2381]: Instructions cannot fit into one word
+     [exec] Error #142: J:/FAKS/4.godina/AADSP2/projekat/projekatAADSP2/projekat_model3/SULDWavTemplate/output/standalone/src/main.s [2384]: Instructions cannot fit into one word
+     [exec]     2 errors.
+     [exec] Errors encountered, no object file emitted
 
-BUILD SUCCESSFUL
-Total time: 4 seconds
+BUILD FAILED
+J:\FAKS\4.godina\AADSP2\projekat\projekatAADSP2\projekat_model3\SULDWavTemplate\output\standalone\standalone.build.xml:52: exec returned: 2
+
+Total time: 3 seconds

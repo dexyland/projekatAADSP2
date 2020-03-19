@@ -377,7 +377,7 @@ void tremolo_init()
 // Comment: Apply tremolo to input samples
 //
 /////////////////////////////////////////////////////////////////////////////////
-DSPfract lfo(DSPaccum phase);
+//DSPfract lfo(DSPaccum phase);
 
 void tremolo_procces(__memY fract* input, __memY fract* output)
 {
@@ -389,12 +389,12 @@ void tremolo_procces(__memY fract* input, __memY fract* output)
 	DSPfract temp_lfo;
 	DSPaccum outVal;
 	*/
-	DSPaccum ph;
+	//DSPaccum ph;
 	__memY DSPfract* p_in = input;
 	__memY DSPfract* p_out = output;
-	DSPfract temp_lfo = FRACT_NUM(0.0);
-	DSPaccum temp_depth;
-	DSPaccum temp_phase;
+	//DSPfract temp_lfo = FRACT_NUM(0.0);
+	//DSPaccum temp_depth;
+	//DSPaccum temp_phase;
 	DSPint j;
 	DSPint index = tremolo_data.index;
 
@@ -402,12 +402,12 @@ void tremolo_procces(__memY fract* input, __memY fract* output)
 	// maintained between calls to processBlock(). Each channel needs to be processed identically
 	// which means that the activity of processing one channel can't affect the state variable for
 	// the next channel.
-	ph = tremolo_data.lfoPhase;
+	//ph = tremolo_data.lfoPhase;
 
 	for (j = 0; j < BLOCK_SIZE; j++)
 	{
 		// Ring modulation is easy! Just multiply the waveform by a periodic carrier
-		temp_lfo = lfo(ph);
+		//temp_lfo = lfo(ph);
 		//temp_depth = tremolo_data.depth * temp_lfo;
 		*p_out = *p_in * (FRACT_NUM(1.0) - p_sine_table[index]);
 
@@ -416,8 +416,8 @@ void tremolo_procces(__memY fract* input, __memY fract* output)
 		*p_out = (DSPfract)outVal;
 */
 		// Update the carrier and LFO phases, keeping them in the range 0-1
-		temp_phase = tremolo_data.inverseSampleRate;
-		ph = ph + temp_phase;
+		//temp_phase = tremolo_data.inverseSampleRate;
+		//ph = ph + temp_phase;
 		index++;
 
 		if (index > MAX_LOOKUP_INDEX)
@@ -428,11 +428,11 @@ void tremolo_procces(__memY fract* input, __memY fract* output)
 	}
 	// Having made a local copy of the state variables for each channel, now transfer the result
 	// back to the main state variable so they will be preserved for the next call of processBlock()
-	tremolo_data.lfoPhase = ph;
+	//tremolo_data.lfoPhase = ph;
 	tremolo_data.index = index;
 }
 
-DSPfract lfo(DSPaccum phase)
+/*DSPfract lfo(DSPaccum phase)
 {
 	if (tremolo_data.waveform == kWaveformTriangle)
 	{
@@ -484,7 +484,7 @@ DSPfract lfo(DSPaccum phase)
 		return FRACT_NUM(0.5);// + FRACT_NUM(0.5)*sinf(2.0 * PI * phase);
 	}
 }
-
+*/
 
 /////////////////////////////////////////////////////////////////////////////////
 // @Author	Dejan Martinov
@@ -511,11 +511,25 @@ void processing_foo()
 
 	for (j = 0; j < BLOCK_SIZE; j++)
 	{
-		temp = *p_L * inputGain;
+		asm("y0 = ymem[i0]; x1 = xmem[_inputGain]\n\t"
+			"a0 = x0 * x1\n\t"
+			"ymem[i0] = a0; i0 += 1\n\t"
+			"y0 = ymem[i1]; x1 = xmem[_inputGain]\n\t"
+			"a0 = x0 * x1");
+
+
+	/*	x0 = ymem[i0]
+		x1 = xmem[_inputGain + 0]	# LN: 514 |
+		a0 = x0 * x1 				# LN: 514 |
+		ymem[i0] = a0; i0 += 1						# LN: 515, 520 |
+		x0 = ymem[i1];
+		x1 = xmem[_inputGain + 0]	# LN: 517 |
+		a0 = x0 * x1			# LN: 517 | */
+		/*temp = *p_L * inputGain;
 		*p_L = temp;
 
 		temp = *p_R * inputGain;
-		*p_R = temp;
+		*p_R = temp;*/
 
 		p_L++;
 		p_R++;
@@ -603,9 +617,10 @@ int main(int argc, char *argv[])
 		int j;
 		int k;
 		int sample;
+		int loopLen = iNumSamples/BLOCK_SIZE;
 		
 		// exact file length should be handled correctly...
-		for(i=0; i<iNumSamples/BLOCK_SIZE; i++)
+		for(i=0; i<loopLen; i++)
 		{	
 			for(j=0; j<BLOCK_SIZE; j++)
 			{
